@@ -1,0 +1,194 @@
+﻿{
+    "Sheet1": [
+        {
+            "code": "7290004131074",
+            "title": "חלב 3% בקרטון מהדרין",
+            "poster_path": "https://www.one-office.co.il/wp-content/uploads/2018/06/7290000042442.jpg",
+            "id": "1",
+            "buyPrice": "4.35",
+            "rate_average": "5.94",
+            "category": "1",
+            "supplier": "תנובה"
+        },
+        {
+            "code": "4127329",
+            "title": "קוטג' 5% תנובה 250גר'",
+            "poster_path": "https://storage.googleapis.com/sp-public/product-images/global/10969/972493/large.jpg",
+            "id": "2",
+            "buyPrice": "4.51",
+            "rate_average": "5.9",
+            "category": "1",
+            "supplier": "תנובה"
+        },
+        {
+            "code": "7290005271410",
+            "title": "12 ביצים L",
+            "poster_path": "https://m.pricez.co.il/ProductPictures/Pricez78214.jpg",
+            "id": "3",
+            "buyPrice": "9.84",
+            "rate_average": "11.3",
+            "category": "2",
+            "supplier": "א.י. שיווק ביצים"
+        },
+        {
+            "code": "124",
+            "title": "סוכריה",
+            "poster_path": "https://www.intex-pool.co.il/images/itempics/58753_large.jpg",
+            "id": "4",
+            "buyPrice": "0.53",
+            "rate_average": "2",
+            "category": "21",
+            "supplier": "שימורי איכות"
+        },
+        {
+            "code": "42442",
+            "title": "חלב קרטון 1 ל",
+            "poster_path": "https://m.pricez.co.il/ProductPictures/7290000057477.jpg",
+            "id": "5",
+            "buyPrice": "4.35",
+            "rate_average": "5.94",
+            "category": "1",
+            "supplier": "תנובה"
+        },
+        {
+            "code": "107",
+            "title": "מיים קר קטן",
+            "poster_path": "https://moly.co.il/wp-content/uploads/2020/01/IMG_2350small.jpg",
+            "id": "6",
+            "buyPrice": "2.1",
+            "rate_average": "5",
+            "category": "13",
+            "supplier": "קוקה קולה"
+        },
+        {
+            "code": "2824640",
+            "title": "סקי 5% 250 גר",
+            "poster_path": "https://hameshek.co.il/wp-content/uploads/2019/07/7290002824640-600x600.jpg",
+            "id": "9",
+            "buyPrice": "3.41",
+            "rate_average": "4.75",
+            "category": "1",
+            "supplier": "שטראוס"
+        },
+        {
+            "code": "408316",
+            "title": "דנונה ביו 3% 200גר'",
+            "poster_path": "https://hameshek.co.il/wp-content/uploads/2019/07/7290004584528-600x600.jpg",
+            "id": "10",
+            "buyPrice": "2.45",
+            "rate_average": "4.1",
+            "category": "1",
+            "supplier": "שטראוס"
+        },
+        {
+            "code": "143",
+            "title": "חלה מתוקה/קלועה פרוסה",
+            "poster_path": "https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/2019/09/10003443/shutterstock_1269835054.jpg",
+            "id": "11",
+            "buyPrice": "7.69",
+            "rate_average": "16.9",
+            "category": "3",
+            "supplier": "מור לחם"
+        },
+        {
+            "code": "72940761",
+            "title": "מילקי שוקולד",
+            "poster_path": "https://www.strauss-group.co.il/wp-content/blogs.dir/1/files/Milky_shokolad_446x302.jpg",
+            "id": "12",
+            "buyPrice": "2.01",
+            "rate_average": "2.9",
+            "category": "1",
+            "supplier": "שטראוס"
+        },
+        {
+            "code": "106",
+            "title": "מים קר 1.5ל'",
+            "poster_path": "https://www.strauss-group.co.il/wp-content/blogs.dir/1/files/Milky_shokolad_446x302.jpg",
+            "id": "13",
+            "buyPrice": "1.55",
+            "rate_average": "6",
+            "category": "13",
+            "supplier": "קוקה קולה"
+        },
+        {
+            "code": "8909860",
+            "title": "קוקה קולה זירו 1.5ל'",
+            "poster_path": "https://www.strauss-group.co.il/wp-content/blogs.dir/1/files/Milky_shokolad_446x302.jpg",
+            "id": "14",
+            "buyPrice": "5.68",
+            "rate_average": "7.9",
+            "category": "13",
+            "supplier": "קוקה קולה"
+        },
+        {
+            "code": "7290000057149",
+            "title": "יוגורט טבעי",
+            "poster_path": "https://www.strauss-group.co.il/wp-content/blogs.dir/1/files/Milky_shokolad_446x302.jpg",
+            "id": "15",
+            "buyPrice": "2.15",
+            "rate_average": "3.3",
+            "category": "1",
+            "supplier": "תנובה"
+        },
+        {
+            "code": "408354",
+            "title": "בר פיצפוצים",
+            "poster_path": "https://www.strauss-group.co.il/wp-content/blogs.dir/1/files/Milky_shokolad_446x302.jpg",
+            "id": "16",
+            "buyPrice": "3.13",
+            "rate_average": "5.5",
+            "category": "1",
+            "supplier": "שטראוס"
+        },
+        {
+            "code": "8693134",
+            "title": "דניאלה  תות",
+            "poster_path": "https://www.strauss-group.co.il/wp-content/blogs.dir/1/files/Milky_shokolad_446x302.jpg",
+            "id": "17",
+            "buyPrice": "2.89",
+            "rate_average": "4.5",
+            "category": "1",
+            "supplier": "שטראוס"
+        },
+        {
+            "code": "7290011017866",
+            "title": "פחית קוקה קולה",
+            "poster_path": "https://www.strauss-group.co.il/wp-content/blogs.dir/1/files/Milky_shokolad_446x302.jpg",
+            "id": "18",
+            "buyPrice": "4.73",
+            "rate_average": "6",
+            "category": "13",
+            "supplier": "קוקה קולה"
+        },
+        {
+            "code": "5906485301012",
+            "title": "משקה אנרגיה XL ",
+            "poster_path": "https://www.strauss-group.co.il/wp-content/blogs.dir/1/files/Milky_shokolad_446x302.jpg",
+            "id": "19",
+            "buyPrice": "2.18",
+            "rate_average": "6",
+            "category": "13",
+            "supplier": "משיח -עולם היין בעמ"
+        },
+        {
+            "code": "7290004584528",
+            "title": "דנונה ביו 1.7% 200גר'",
+            "poster_path": "https://www.strauss-group.co.il/wp-content/blogs.dir/1/files/Milky_shokolad_446x302.jpg",
+            "id": "20",
+            "buyPrice": "2.45",
+            "rate_average": "4.1",
+            "category": "1",
+            "supplier": "שטראוס"
+        },
+        {
+            "code": "7290001302279",
+            "title": "במבה אוסם 60 גר",
+            "poster_path": "https://www.strauss-group.co.il/wp-content/blogs.dir/1/files/Milky_shokolad_446x302.jpg",
+            "id": "21",
+            "buyPrice": "3.14",
+            "rate_average": "4.9",
+            "category": "8",
+            "supplier": "אסם יבשים"
+        }
+    ]
+}

@@ -1,0 +1,73 @@
+import React from "react";
+import {
+    View,
+    Text,
+    ScrollView,
+    StyleSheet,
+} from "react-native";
+import Item from "./item";
+import colors from './StylesGalery'
+import { AntDesign } from '@expo/vector-icons';
+
+function ProductsContainer(props) {
+    const productContainer = props.products
+    const type = props.type
+    return (
+        <View style={styles.container}>
+            {/* list of movies */}
+            <ScrollView style={styles.container}>
+                <View style={styles.listOfMovies}>
+                    {productContainer && productContainer.length > 0 ? (
+                        productContainer.map((movie, i) => {
+                            return (
+                                <Item
+                                    key={i}
+                                    movie={movie}
+                                    navigation={props.navigation}
+                                    type={type}
+
+                                />
+                            );
+                        })
+                    ) : (
+                            <View style={{ flex: 1, alignItems: "center", marginTop: 50 }}>
+                                {/* in case of empty movies in favorite page */}
+                                <Text style={{ fontSize: 17, color: 'red' }}>
+                                    אין פריטים בעגלה
+              </Text>
+                            </View>
+                        )}
+                </View>
+            </ScrollView>
+        </View>
+    );
+
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        // backgroundColor: "white",
+    },
+    listOfMovies: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    header: {
+        width: "100%",
+        alignItems: "center",
+        backgroundColor: '#022C80',
+        paddingBottom: 10,
+        opacity: 0.7,
+        paddingTop: 10,
+    },
+    textHeader: {
+        fontSize: 30,
+        fontWeight: "bold",
+        color: 'white',
+    },
+});
+
+export default ProductsContainer;
