@@ -16,60 +16,17 @@ export default function App() {
   const name = 'baji'
   const authContext = useContext(AuthContext);
 
-  const handleRegister = () => {
-    app
-      .auth()
-      .createUserWithEmailAndPassword(newEmail, password)
-      .then(function (result) {
-        console.log("Signed up");
-        app
-          .database()
-          .ref("/users/" + result.user.uid)
-          .set(
-            {
-              gmail: result.user.email,
-              created: Date.now(),
-              last_logged: Date.now(),
-            },
-            function (error) {
-              if (error) {
-                // The write failed...
-                console.log(error);
-              } else {
-                // Data saved successfully!
-                console.log("Success post to DB");
-              }
-            }
-          );
-      })
-      .then((userCredentials) => {
-        return userCredentials.user.updateProfile({
-          displayName: name,
-        });
-      })
-      .catch((err) => {
-        console.log(err)
-      });
-  };
 
-  const handleLogin = () => {
-    app
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .catch((err) => {
-        console.log("error firebase");
-      });
-    const { currentUser } = app.auth();
-    // console.log("currentUser", currentUser)
-    setUser(currentUser);
-  };
 
   useEffect(() => {
     // handleRegister()
     // handleLogin()
     const user = app.auth().onAuthStateChanged((user) => {
       setUser(user ? user : null);
-      // console.log("user: ", user);
+      if (user)
+        console.log(user ? "we have a user" : "empty");
+      else
+        console.log('no user');
     });
   }, []);
   return (

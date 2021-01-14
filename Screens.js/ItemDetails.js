@@ -79,13 +79,8 @@ export default function ItemDetails({ route, navigation }) {
     }
     return (
         <SafeAreaView style={styles.container}>
-            <ImageBackground style={styles.background} source={imageAdress}>
-                {/* back btn */}
-                {/* <TouchableOpacity onPress={() => goBackBtn(productAmount)} style={colors.btnBack}>
-                    <AntDesign name="close" size={30} color="black"
-                    />
-                </TouchableOpacity> */}
-                {/* details */}
+
+            <ImageBackground imageStyle={{ resizeMode: "contain", top: -200 }} style={styles.background} source={imageAdress}>
                 <View style={styles.detailsAndBtn}>
                     {/* name */}
                     <View style={styles.detailsSquere}>
@@ -150,6 +145,9 @@ const styles = StyleSheet.create({
     },
     background: {
         flex: 1,
+        backgroundColor: "white"
+        // resizeMode: "contain",
+
     },
     detailsAndBtn: {
         flex: 1,

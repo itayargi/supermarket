@@ -30,29 +30,11 @@ function ListOfProducts({ navigation, route }) {
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (<Header navigation={navigation} title="העגלה שלי" />),
+
         });
     }, [navigation]);
 
-    useEffect(() => {
-        // axiosRequest();
-        // setMovieList(Supermaket)
-        // console.log(Supermaket)
-        return () => {
-            <Text>...Loading</Text>;
-        };
-    }, []);
-    // const productContainer = movieList
 
-    function checkWitchPage() {
-        switch (type) {
-            case "allProducts": {
-                return movieList;
-            }
-            default: {
-                return favoriteList;
-            }
-        }
-    }
     return (
         <SafeAreaView style={styles.container}>
             {/* <Categories /> */}

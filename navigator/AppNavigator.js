@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Welcome from '../Screens.js/Welcome'
@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from '../Screens.js/LoginScreen';
 import RegisterScreen from '../Screens.js/RegisterScreen';
 import CategoriesOptions from '../Screens.js/CategoriesOptions';
+import LoadingPage from '../Screens.js/LoadingPage';
 
 const Stack = createStackNavigator();
 
@@ -23,8 +24,11 @@ function AppNavigator(props) {
                 <Stack.Navigator headerMode="screen" screenOptions={{
                     headerTintColor: 'white',
                     headerStyle: { backgroundColor: 'tomato' },
-                }} initialRouteName="CategoriesOptions">
-                    <Stack.Screen name="Home" options={{ headerShown: false, }}>
+                }} initialRouteName="LoadingPage">
+                    <Stack.Screen name="LoadingPage" options={{ headerShown: false, }}>
+                        {(props) => <LoadingPage {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen name="Home" options={{ headerShown: false, title: "עמוד הבית" }}>
                         {(props) => <Welcome {...props} />}
                     </Stack.Screen>
                     <Stack.Screen name="ListOfProducts" options={{
@@ -35,10 +39,10 @@ function AppNavigator(props) {
                     <Stack.Screen name="Item" options={{ headerShown: false }}>
                         {(props) => <item {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen name="LogginScreen" options={{ title: "התחברות" }}>
+                    <Stack.Screen name="LogginScreen" options={{ title: "התחברות", headerLeft: null }}>
                         {(props) => <LoginScreen {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen name="RegisterScreen" options={{ headerShown: false }}>
+                    <Stack.Screen name="RegisterScreen" options={{ title: "הרשמה", headerLeft: null }}>
                         {(props) => <RegisterScreen {...props} />}
                     </Stack.Screen>
                     <Stack.Screen name="ItemDetails" options={{ headerShown: false }}>
@@ -54,7 +58,7 @@ function AppNavigator(props) {
                     <Stack.Screen name="CategoriesOptions" options={{
 
                         headerRight: () => (<View><Image style={{ width: 35, height: 35 }} source={require('../assets/super/icon.png')} /></View>),
-                        title: "בחר קטגוריה"
+                        title: "בחר/י קטגוריה"
                     }}>
                         {(props) => <CategoriesOptions {...props} />}
                     </Stack.Screen>

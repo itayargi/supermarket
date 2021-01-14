@@ -1,30 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
     View,
     Text,
     StyleSheet,
     TouchableOpacity,
     ImageBackground,
+    LogBox
 } from "react-native";
-// import * as RootNavigation from "../RootNavigations.js";
 import "react-native-gesture-handler";
 import colors from '../components/StylesGalery'
-// import Supermaket from "../components/ProductsData.json"
 
-function Welcome({ navigation }) {
-    // const [movieList, setMovieList] = useState([]);
+LogBox.ignoreAllLogs();
 
-    // useEffect(() => {
-    //     // axiosRequest();
-    //     setMovieList(Supermaket)
-    //     console.log(Supermaket)
-    //     return () => {
-    //         <Text>...Loading</Text>;
-    //     };
-    // }, []);
+function Welcome({ navigation, route }) {
+    const { username } = route.params
+
     // navigate to popular page (props of popular)
     const goToPopular = () => {
-        navigation.navigate("ListOfProducts");
+        navigation.navigate("CategoriesOptions");
     };
     // navigate to favorite page (props of favorite)
     const goToFavorite = () => {
@@ -38,7 +31,7 @@ function Welcome({ navigation }) {
             >
                 {/* header welcome */}
                 <View style={styles.headerView}>
-                    <Text style={styles.header}>ברוך הבא יא זין</Text>
+                    <Text style={styles.header}>ברוך הבא {username}</Text>
                 </View>
                 <View style={styles.btnsBox}>
                     {/* Popular btn */}

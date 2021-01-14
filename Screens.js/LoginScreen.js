@@ -14,6 +14,7 @@ import app from "../api/firebase";
 import colors from "../components/StylesGalery";
 // import Logo from "../components/Logo";
 import AuthContext from '../data/AuthContext'
+import LoadingShow from "../components/LoadingShow";
 
 const Light = {
     Background: "#F2F2F2",
@@ -43,13 +44,21 @@ function LoginScreen({ navigation }) {
         app
             .auth()
             .signInWithEmailAndPassword(email, password)
-            // .then(function (result) {
-            //     console.log("yes");
-            // })
+            .then(function (result) {
+                authContext.setUser(result.user);
+                app.database().ref('/users/' + result.user.uid).once('value').then(async (snapshot) => {
+                    var username = await (snapshot.val() && snapshot.val().fullName) || 'Anonymous';
+                    console.log('userName', username)
+                    navigation.push('Home', { username });
+                    // ...
+                });
+                // navigation.push('Home');
+
+            })
             .catch((error) => {
                 setErrorMsg(error.message);
                 setLoading(false);
-                console.log("blabla");
+                console.log("error sign in with email", error);
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 if (errorCode === 'auth/wrong-password') {
@@ -57,16 +66,15 @@ function LoginScreen({ navigation }) {
                 } else {
                     alert(errorMessage);
                 }
-                console.log(error);
             });
-        const { currentUser } = app.auth();
-        authContext.setUser(currentUser);
+
     };
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <KeyboardAvoidingView style={styles(mood).container} behavior="height">
                 <View style={[styles(mood).screenStyles, { flex: 1 }]}>
+                    {loading && <LoadingShow />}
                     {/* <LoadingScreen visible={loading} /> */}
                     {/* <Logo width={100} height={100} /> */}
                     <View style={styles(mood).errorMessage}>
@@ -82,6 +90,7 @@ function LoginScreen({ navigation }) {
                             autoCapitalize="none"
                             onChangeText={(email) => setEmail(email)}
                             value={email}
+                            keyboardType="email-address"
                             placeholder="כתובת מייל"
                             placeholderTextColor={
                                 mood === "Dark" ? Dark.Button : Light.Button
@@ -125,7 +134,7 @@ function LoginScreen({ navigation }) {
                                 width: "80%",
                                 padding: 10,
                             }}
-                            onPress={() => navigation.navigate("WelcomeScreen")}
+                            onPress={() => navigation.navigate("Home")}
                         >
                             <Text style={styles(mood).smalltext}>
                                 התחבר דרך גוגל
@@ -196,6 +205,7 @@ const styles = (mood) =>
             fontSize: 15,
             color: mood === "Dark" ? Dark.Base : Light.Base,
             paddingBottom: 5,
+            textAlign: "right"
             // placeholder: mood === "Dark" ? Dark.Base : Light.Base,
         },
         smalltext: {

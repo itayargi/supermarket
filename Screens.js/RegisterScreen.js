@@ -14,6 +14,7 @@ import { CustomPicker } from "react-native-custom-picker";
 import app from "../api/firebase";
 
 import colors from "../components/StylesGalery";
+import LoadingShow from "../components/LoadingShow";
 
 const Light = {
     Background: "#F2F2F2",
@@ -34,11 +35,12 @@ function RegisterScreen({ navigation }) {
     const [password, setPassword] = useState("");
     const [adress, setAdress] = useState("");
     const [floor, setFloor] = useState("");
-    const [appatement, setAppartement] = useState("");
-
+    const [appartement, setAppartement] = useState("");
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
     const [mood, setMood] = useState("Dark");
+
+
 
     const handleRegister = () => {
         setLoading(true);
@@ -46,18 +48,18 @@ function RegisterScreen({ navigation }) {
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then(function (result) {
-                console.log("Signed up");
+                console.log("Signed up", result);
                 app
                     .database()
                     .ref("/users/" + result.user.uid)
                     .set(
                         {
                             // data to send
-                            gmail: result.user.email,
+                            email: result.user.email,
                             fullName: name,
                             adress: adress,
                             floor: floor,
-                            appatement: appatement,
+                            appatement: appartement,
                             created: Date.now(),
                             last_logged: Date.now(),
                         },
@@ -67,7 +69,10 @@ function RegisterScreen({ navigation }) {
                                 console.log(error);
                             } else {
                                 // Data saved successfully!
+                                setLoading(false);
                                 console.log("Success post to DB");
+                                navigation.push('Home', { username: name });
+
                             }
                         }
                     );
@@ -84,8 +89,9 @@ function RegisterScreen({ navigation }) {
     };
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <KeyboardAvoidingView style={styles(mood).container} behavior="padding">
-                <View style={{ flex: 1 }}>
+            <KeyboardAvoidingView style={styles(mood).container} behavior="height">
+                <View style={{ flex: 1, direction: "rtl", alignContent: "flex-start", alignItems: "flex-start" }}>
+                    {loading && <LoadingShow />}
                     {/* <Logo width={100} height={100} /> */}
                     {/* <LoadingScreen visible={loading} /> */}
                     <View style={styles(mood).errorMessage}>
@@ -95,58 +101,84 @@ function RegisterScreen({ navigation }) {
                     </View>
 
                     <View style={styles(mood).inputSpace}>
+                        {/* full name */}
                         <View>
                             {/* <Text style={styles(mood).smalltext}>: </Text> */}
                             <TextInput
-                                style={styles(mood).input}
+                                style={[styles(mood).input, { textAlign: "right" }]}
                                 onChangeText={(name) => setName(name)}
                                 value={name}
-                                placeholder="Full Name"
+                                placeholder="שם מלא"
                                 placeholderTextColor={
                                     mood === "Dark" ? Dark.Button : Light.Button
                                 }
                             ></TextInput>
                         </View>
+                        {/* email */}
                         <View>
-                            {/* <Text style={styles(mood).smalltext}>: </Text> */}
                             <TextInput
                                 style={styles(mood).input}
                                 autoCapitalize="none"
                                 onChangeText={(email) => setEmail(email)}
                                 value={email}
-                                placeholder="Email Address"
+                                keyboardType="email-address"
+                                placeholder="כתובת מייל"
                                 placeholderTextColor={
                                     mood === "Dark" ? Dark.Button : Light.Button
                                 }
                             ></TextInput>
                         </View>
                         <View style={{}}>
-                            {/* <Text style={styles(mood).smalltext}>Password: </Text> */}
+                            {/* password */}
                             <TextInput
                                 style={styles(mood).input}
                                 autoCapitalize="none"
                                 secureTextEntry
                                 onChangeText={(pass) => setPassword(pass)}
                                 value={password}
-                                placeholder="Password"
+                                placeholder="סיסמא - לפחות 4 אותיות/מספרים"
                                 placeholderTextColor={
                                     mood === "Dark" ? Dark.Button : Light.Button
                                 }
                             ></TextInput>
                         </View>
-                        <View style={{}}>
+                        <View style={{ flexDirection: "row", width: "100%" }}>
                             {/* <Text style={styles(mood).smalltext}>Password: </Text> */}
                             <TextInput
-                                style={styles(mood).input}
+                                style={[styles(mood).input, { width: "65%" }]}
                                 autoCapitalize="none"
-                                secureTextEntry
-                                onChangeText={(pass) => setPassword(pass)}
-                                value={password}
-                                placeholder="Password"
+                                onChangeText={(street) => setAdress(street)}
+                                value={adress}
+                                placeholder="רחוב ומספר"
                                 placeholderTextColor={
                                     mood === "Dark" ? Dark.Button : Light.Button
                                 }
                             ></TextInput>
+                            <View style={{ width: "30%", marginStart: 13 }}>
+                                <TextInput
+                                    style={styles(mood).input}
+                                    autoCapitalize="none"
+                                    onChangeText={(floor) => setFloor(floor)}
+                                    keyboardType="numeric"
+                                    value={floor}
+                                    placeholder="קומה"
+                                    placeholderTextColor={
+                                        mood === "Dark" ? Dark.Button : Light.Button
+                                    }
+                                />
+                                <TextInput
+                                    style={styles(mood).input}
+                                    autoCapitalize="none"
+                                    onChangeText={(pass) => setAppartement(pass)}
+                                    value={appartement}
+                                    keyboardType="numeric"
+                                    placeholder="דירה"
+                                    placeholderTextColor={
+                                        mood === "Dark" ? Dark.Button : Light.Button
+                                    }
+                                />
+
+                            </View>
                         </View>
 
                     </View>
@@ -156,15 +188,15 @@ function RegisterScreen({ navigation }) {
                             style={styles(mood).button}
                             onPress={handleRegister}
                         >
-                            <Text style={styles(mood).buttonText}>Sign up</Text>
+                            <Text style={styles(mood).buttonText}>הרשם</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={{ alignItems: "center" }}
                             onPress={() => navigation.goBack()}
                         >
                             <Text style={styles(mood).smalltext}>
-                                Already have an account?{" "}
-                                <Text style={{ fontWeight: "600" }}>Sign in</Text>
+                                כבר יש לך חשבון?{" "}
+                                <Text style={{ fontWeight: "600" }}>התחבר</Text>
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -226,6 +258,7 @@ const styles = (mood) =>
             fontSize: 15,
             color: mood === "Dark" ? Dark.Base : Light.Base,
             paddingBottom: 5,
+            textAlign: "right",
         },
         smalltext: {
             color: mood === "Dark" ? Dark.Base : Light.Base,

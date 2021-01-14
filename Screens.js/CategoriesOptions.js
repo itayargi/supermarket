@@ -1,31 +1,30 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, } from 'react-native';
 import colors from '../components/StylesGalery'
 import productsList from '../components/ProductsData.json'
-import { AntDesign } from '@expo/vector-icons';
 import Autocomplete from 'react-native-autocomplete-input';
+import Header from '../components/Header';
+
 function CategoriesOptions({ navigation }) {
     const [productsCart, setProductsCart] = useState(productsList);
     const [searchInput, setSearchInput] = useState("");
 
     const query = searchInput
     const data = filteredProducts(searchInput);
-    // const data = productsCart.filter((product) => product.title.includes(searchInput))
-    console.log(data)
-    const navigateBySearch = (title) => {
 
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (<Header navigation={navigation} title="העגלה שלי" />),
+        });
+    }, [navigation]);
+
+
+    const navigateBySearch = (title) => {
         const filtered = productsList.filter((product) => product.title == title)
-        console.log("filtered", filtered)
         if (filtered !== undefined) {
             setSearchInput("")
             navigation.push('ItemDetails', { movie: filtered[0] })
         }
-
-    }
-
-    const searchProduct = (product) => {
-        console.log('item', product)
-        navigation.push('ItemDetails', { movie: product })
 
     }
     const navigateWithProducts = (category) => {
@@ -34,16 +33,7 @@ function CategoriesOptions({ navigation }) {
     }
     function filteredProducts(text) {
         const filted = productsList.filter((product) => product.title.includes(text))
-        // const filted = productsList.filter((product) => product.title.indexOf(text) !== -1).title
-        const titleArray = filted.map(product => {
-            return product.title
-        })
-        // const filtered = productList.map
-        // console.log("data", titleArray)
-
         return filted
-        // navigation.push('ListOfProducts', { productList: filted })
-
     }
     const categoryObj = [
         { name: "מוצרי חלב", image: "https://www.aguda.co.il/wp-content/uploads/2019/02/%D7%9C%D7%9E%D7%94-%D7%97%D7%A9%D7%95%D7%91-%D7%9C%D7%A6%D7%A8%D7%95%D7%9A-%D7%97%D7%9C%D7%91-%D7%95%D7%9E%D7%95%D7%A6%D7%A8%D7%99%D7%95.jpg", category: "1" },
@@ -64,17 +54,11 @@ function CategoriesOptions({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={{ width: "100%", alignItems: "center", marginTop: 5, justifyContent: "space-around" }}>
-
-                {/* <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", zIndex: 2 }} onPress={() => navigateBySearch(searchInput)}>
-                    <AntDesign name="search1" size={24} color="white" />
-                    <Text style={{ fontSize: 16, color: "white", }}>חיפוש</Text>
-                </TouchableOpacity> */}
                 {/* auto complete */}
                 <View style={styles.autocompleteContainer}>
-                    <Autocomplete containerStyle={{ width: "80%", }} style={styles.inputStyle}
+                    <Autocomplete containerStyle={{}} style={styles.inputStyle}
                         data={data}
-                        // value={searchInput}
-                        placeholder="חפש מוצר"
+                        placeholder="חפש/י מוצר"
                         placeholderTextColor="grey"
                         keyExtractor={(item, i) => item.id}
                         defaultValue={searchInput}
@@ -86,13 +70,11 @@ function CategoriesOptions({ navigation }) {
                         }
                         }
                     />
-                    {/* <TouchableOpacity onPress={() => setSearchInput("")} style={{ width: 50, justifyContent: "center", alignItems: "center", zIndex: 2 }}>
-                        <Text style={{ color: "white" }}>נקה</Text>
-                    </TouchableOpacity> */}
+
                 </View>
                 {/* end */}
             </View>
-            {/* {renderCategories(categoryList)} */}
+            {/* {renderCategories} */}
             <View style={styles.mainView}>
                 {categoryObj.map((category, index) => {
                     return (
@@ -153,6 +135,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     inputStyle: {
+        textAlign: "right",
         // width: "60%",
         // height: 40,
         // fontSize: 15,

@@ -10,14 +10,14 @@ import "react-native-gesture-handler";
 // import * as RootNavigation from "../RootNavigations.js";
 import colors from '../components/StylesGalery'
 function item(props) {
+    const productName = showTitleWords(props.movie.title)
     const imageUrl = props.movie.image;
-    // const imageUrl = `http://image.tmdb.org/t/p/original/${props.movie.poster_path}`;
     const favoritePageFlag = props.type == 'cart' ? true : false;
     // in case of no poster_path
     const Uc = require("../assets/Icons/Uc.png");
     // poster url
     let imageAdress = { uri: imageUrl };
-    // mouse press on a movie direct to movie details with the movie and its index
+
     const clickPress = (movie, index) => {
         props.navigation.navigate("ItemDetails", {
             movie: movie,
@@ -25,6 +25,12 @@ function item(props) {
             type: props.type,
         });
     };
+    function showTitleWords(str) {
+        if (str) {
+            const splitStr = str.split(' ').slice(0, 2).join(' ');
+            return splitStr;
+        }
+    }
     return (
         <TouchableOpacity
             onPress={() => clickPress(props.movie, props.movie.id)}
@@ -34,9 +40,8 @@ function item(props) {
                 <View style={{
                     width: "100%",
                     height: "100%",
-                    // alignContent: "center"
                 }}><View >
-                        <Text numberOfLines={1} style={styles.headerText}>{props.movie.title}</Text>
+                        <Text numberOfLines={1} style={styles.headerText}>{productName}</Text>
                     </View>
                     <Image
                         style={styles.image}
@@ -48,10 +53,15 @@ function item(props) {
                 </View>
 
 
-            ) : <Image
-                    style={styles.image}
-                    source={Uc}
-                />}
+            ) :
+                <View>
+                    <Text numberOfLines={1} style={styles.headerText}>{productName}</Text>
+                    <Image
+                        style={styles.image}
+                        source={Uc}
+                    />
+                </View>
+            }
 
         </TouchableOpacity>
     );
@@ -69,6 +79,7 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: "contain",
         width: "100%",
+        borderRadius: 20,
     },
     amountBox: {
         borderRadius: 10,
