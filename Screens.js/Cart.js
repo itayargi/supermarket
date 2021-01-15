@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     View,
     Text,
@@ -6,6 +6,7 @@ import {
     Linking,
     StyleSheet,
     ImageBackground,
+    Modal
 } from 'react-native';
 import { DataStorage } from "../data/DataStorage";
 import colors from '../components/StylesGalery'
@@ -13,11 +14,13 @@ import { AntDesign } from '@expo/vector-icons';
 import Item from "../components/item";
 import ProductsContainer from '../components/ProductsContainer';
 import SendToExcel from '../components/SendToExcel';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import app from '../api/firebase'
-
+import ModalScreen from '../components/ModalScreen';
+import { Table, Row, Rows } from 'react-native-table-component';
 
 function Cart({ navigation }) {
+    const [modalStatus, setModalStatus] = useState(false)
     const [favoriteList, setFavoriteList] = useContext(DataStorage);
     const productContainer = favoriteList.map((product) => {
         return {
@@ -26,6 +29,18 @@ function Cart({ navigation }) {
             barcode: product.code
         }
     });
+    const productsToTable = favoriteList.map((product) => {
+        return [
+            product.title, product.amount, '₪ ' + (product.amount * product.salePrice).toFixed(2)
+        ]
+    });
+
+    const tableHeads = ["שם פריט", "כמות", "מחיר"]
+    console.log("productsToTable", productsToTable)
+    const tableToWhatsapp = <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
+        <Row data={tableHeads} style={styles.head} textStyle={styles.headText} />
+        <Rows data={productsToTable} textStyle={styles.text} />
+    </Table>
     const whatsappMessage = "רשימת קניות חדשה\n \n" + JSON.stringify(productContainer) + "\n סוף ההזמנה"
     const type = "cart"
     const totalCart = favoriteList.reduce(function (accumulator, currentValue) {
@@ -34,31 +49,28 @@ function Cart({ navigation }) {
     const roundedTotal = totalCart.toFixed(2)
 
     async function updateFirebaseWithOrder() {
-        var userId = app.auth().currentUser.uid;
-        return app.database().ref('/users/' + userId).once('value').then((snapshot) => {
-            var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-            var appatement = (snapshot.val() && snapshot.val().appatement) || null;
-            var floor = (snapshot.val() && snapshot.val().floor) || null;
-            var adress = (snapshot.val() && snapshot.val().adress) || null;
-            var email = (snapshot.val() && snapshot.val().email) || null;
+        sendToWhatsapp();
+        // setModalStatus(true)
+        // var userId = app.auth().currentUser.uid;
+        // return app.database().ref('/users/' + userId).once('value').then((snapshot) => {
+        //     var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+        //     var appatement = (snapshot.val() && snapshot.val().appatement) || null;
+        //     var floor = (snapshot.val() && snapshot.val().floor) || null;
+        //     var adress = (snapshot.val() && snapshot.val().adress) || null;
+        //     var email = (snapshot.val() && snapshot.val().email) || null;
 
-            writeNewPost(userId, username, adress, floor, appatement, email, productContainer)
-            // ...
-            console.log('finish');
-            sendToWhatsapp();
-        });
+        //     writeNewPost(userId, username, adress, floor, appatement, email, productContainer)
+        //     // ...
+        //     console.log('finish');
+        // });
+        console.log('finish');
+
     }
 
     function writeNewPost(uid, username, adress, floor, appartement, email, order) {
 
-        // A post entry.
+        // A order entry.
         var postData = {
-            //   author: username,
-            //   uid: uid,
-            //   body: body,
-            //   title: title,
-            //   starCount: 0,
-            //   authorPic: picture
             email: email,
             fullName: username,
             adress: adress,
@@ -83,26 +95,33 @@ function Cart({ navigation }) {
 
     const sendToWhatsapp = () => {
 
-        Linking.openURL(`whatsapp://send?text=${whatsappMessage}&phone=+972542201060`)
+        Linking.openURL(`whatsapp://send?text=${whatsappMessage}&phone=+972543112161`)
     }
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground source={require('../assets/background/cart.jpg')} style={styles.container}>
-
-                <ProductsContainer products={favoriteList} type={type} navigation={navigation} />
-                {/* <SendToExcel products={favoriteList} /> */}
+                {/* <ProductsContainer products={favoriteList} type={type} navigation={navigation} /> */}
+                <ScrollView>
+                    <View>
+                        <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
+                            <Row data={tableHeads} style={styles.head} textStyle={styles.headText} />
+                            <Rows data={productsToTable} textStyle={styles.text} />
+                        </Table>
+                    </View>
+                </ScrollView>
                 {/* cart total */}
                 <View style={styles.totalText}>
                     <Text style={{ textAlign: "center", fontSize: 32, color: "white" }}>{"סהכ בעגלה: "} {roundedTotal ? roundedTotal : 0}{' ₪'}</Text>
-
                 </View>
+                {/* send btn */}
                 <TouchableOpacity onPress={() => updateFirebaseWithOrder()}>
                     <View style={styles.sendBtn}>
                         <Text style={{ color: "white", fontSize: 22, textAlign: "center" }}>שלח הזמנה</Text>
-
                     </View>
                 </TouchableOpacity>
             </ImageBackground>
+            {/* modal */}
+            <ModalScreen sendToWhatsapp={sendToWhatsapp} status={modalStatus} title="האם לשלוח את ההזמנה?" yes="כן" no="לא" />
 
         </SafeAreaView>
     );
@@ -112,7 +131,7 @@ function Cart({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: "white",
+        direction: "rtl"
     },
     listOfMovies: {
         flexDirection: "row",
@@ -149,6 +168,9 @@ const styles = StyleSheet.create({
         borderColor: colors.popularColor,
         borderWidth: 5
     },
+    head: { height: 40, backgroundColor: '#f1f8ff', alignItems: "center", fontWeight: "bold" },
+    headText: { fontWeight: "bold", textAlign: "center" },
+    text: { margin: 6, textAlign: "center" }
 });
 
 export default Cart;

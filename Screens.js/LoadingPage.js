@@ -31,9 +31,9 @@ function LoadingPage({ navigation }) {
     }, [])
     return (
         <View style={styles.container}>
-            <ImageBackground style={styles.background} source={require('../assets/background/new.jpg')}>
+            <ImageBackground imageStyle={{ resizeMode: "contain" }} style={styles.background} source={require('../assets/background/logo.png')}>
                 <ActivityIndicator size="large" color="green" />
-                <Text style={{ color: "white" }} >טוען... אנא המתן</Text>
+                <Text style={{ color: "black" }} >טוען... אנא המתן</Text>
                 {/* <LoadingShow /> */}
             </ImageBackground>
         </View>
@@ -44,11 +44,13 @@ function LoadingPage({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "white"
     },
     background: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        justifyContent: "flex-end",
+        alignItems: "center",
+        paddingBottom: "20%"
 
     }
 });

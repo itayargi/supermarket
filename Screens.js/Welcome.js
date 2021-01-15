@@ -13,7 +13,7 @@ import colors from '../components/StylesGalery'
 LogBox.ignoreAllLogs();
 
 function Welcome({ navigation, route }) {
-    const { username } = route.params
+    const { username } = route.params !== undefined ? route.params : "אורח\ת"
 
     // navigate to popular page (props of popular)
     const goToPopular = () => {
@@ -27,7 +27,7 @@ function Welcome({ navigation, route }) {
         <View style={styles.container}>
             <ImageBackground
                 style={styles.backgroundPic}
-                source={require("../assets/background/new.jpg")}
+                source={require("../assets/background/welcome.jpg")}
             >
                 {/* header welcome */}
                 <View style={styles.headerView}>
