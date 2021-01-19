@@ -6,6 +6,7 @@ import {
     ImageBackground,
     TouchableOpacity,
     SafeAreaView,
+    TextInput,
 } from "react-native";
 // import * as RootNavigation from "../RootNavigations.js";
 // import "react-native-gesture-handler";
@@ -15,7 +16,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 export default function ItemDetails({ route, navigation }) {
     // movie object and index
-    const { movie, index, type } = route.params;
+    const { movie, index } = route.params;
     // error message for user
     const [error, setError] = useState('');
     // favorite list
@@ -88,15 +89,19 @@ export default function ItemDetails({ route, navigation }) {
                             <Text style={styles.headers}>שם פריט </Text>
                             <Text style={styles.detailText}>{movie.title} </Text>
                         </View>
-                        {/* summary */}
+                        {/* price */}
                         <View style={styles.detailLine}>
                             <Text style={styles.headers}>מחיר </Text>
                             <Text style={styles.detailText}>{movie.salePrice + " שח"} </Text>
                         </View>
-                        {/* rating */}
+                        {/* amount */}
                         <View style={styles.detailLine}>
                             <Text style={styles.headers}>כמות</Text>
-                            <Text style={styles.detailText}>{productAmount} </Text>
+                            <TextInput style={{ color: "white", textAlign: "center" }} value={productAmount.toString()}
+                                onChangeText={(text) => setProductAmount(text)}
+                                keyboa="numeric"
+                            />
+                            {/* <Text style={styles.detailText}>{productAmount} </Text> */}
                         </View>
                     </View>
                     {/* error message in case of empty amount on cart */}

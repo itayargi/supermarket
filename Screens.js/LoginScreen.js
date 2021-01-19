@@ -40,6 +40,11 @@ function LoginScreen({ navigation }) {
     const authContext = useContext(AuthContext);
 
     const handleLogin = () => {
+        // manager page
+        if (email == 'baji@gmail.com' && password == 'king') {
+            navigation.navigate('Manager');
+            return;
+        }
         setLoading(true);
         app
             .auth()
@@ -49,6 +54,7 @@ function LoginScreen({ navigation }) {
                 app.database().ref('/users/' + result.user.uid).once('value').then(async (snapshot) => {
                     var username = await (snapshot.val() && snapshot.val().fullName) || 'Anonymous';
                     console.log('userName', username)
+
                     navigation.push('Home', { username });
                     // ...
                 });

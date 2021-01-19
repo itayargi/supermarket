@@ -5,12 +5,13 @@ import {
     StyleSheet,
     TouchableOpacity,
     ImageBackground,
-    LogBox
+    LogBox,
+    Platform
 } from "react-native";
 import "react-native-gesture-handler";
 import colors from '../components/StylesGalery'
 
-LogBox.ignoreAllLogs();
+Platform.OS !== "web" && LogBox.ignoreAllLogs();
 
 function Welcome({ navigation, route }) {
     const { username } = route.params !== undefined ? route.params : "אורח\ת"
@@ -27,7 +28,7 @@ function Welcome({ navigation, route }) {
         <View style={styles.container}>
             <ImageBackground
                 style={styles.backgroundPic}
-                source={require("../assets/background/welcome.jpg")}
+                source={require("../assets/background/new.jpg")}
             >
                 {/* header welcome */}
                 <View style={styles.headerView}>

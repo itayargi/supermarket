@@ -11,20 +11,18 @@ const wait = (timeout) => {
 function LoadingPage({ navigation }) {
 
     const navigateTo = async () => {
-        wait(3000).then(async () => {
-            const userData = app.auth().onAuthStateChanged((user) => {
-                // User is signed in.
-                if (user) {
-                    console.log('funck yeah');
-                    navigation.navigate('LogginScreen')
-                }
-                // No user is signed in.
-                else {
-                    console.log('no fucking fuck');
-                    navigation.navigate('RegisterScreen')
-                }
-            })
-        });
+        const userData = app.auth().onAuthStateChanged((user) => {
+            // User is signed in.
+            if (user) {
+                console.log('funck yeah');
+                navigation.navigate('LogginScreen')
+            }
+            // No user is signed in.
+            else {
+                console.log('no fucking fuck');
+                navigation.navigate('RegisterScreen')
+            }
+        })
     }
     useEffect(() => {
         navigateTo()

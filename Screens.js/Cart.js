@@ -8,7 +8,7 @@ import {
     ImageBackground,
     Modal
 } from 'react-native';
-import { DataStorage } from "../data/DataStorage";
+import { DataStorage, serverRequests } from "../data/DataStorage";
 import colors from '../components/StylesGalery'
 import { AntDesign } from '@expo/vector-icons';
 import Item from "../components/item";
@@ -18,10 +18,14 @@ import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import app from '../api/firebase'
 import ModalScreen from '../components/ModalScreen';
 import { Table, Row, Rows } from 'react-native-table-component';
+import axios from 'axios'
+import TableShow from '../components/TableShow';
 
 function Cart({ navigation }) {
+
     const [modalStatus, setModalStatus] = useState(false)
     const [favoriteList, setFavoriteList] = useContext(DataStorage);
+
     const productContainer = favoriteList.map((product) => {
         return {
             name: product.title,
@@ -29,14 +33,15 @@ function Cart({ navigation }) {
             barcode: product.code
         }
     });
+    // console.log("array", productContainer)
     const productsToTable = favoriteList.map((product) => {
         return [
-            product.title, product.amount, '₪ ' + (product.amount * product.salePrice).toFixed(2)
+            product.title.split(' ').slice(0, 2).join(' '), product.amount, '₪ ' + (product.amount * product.salePrice).toFixed(2)
         ]
     });
 
     const tableHeads = ["שם פריט", "כמות", "מחיר"]
-    console.log("productsToTable", productsToTable)
+    // console.log("productsToTable", productsToTable)
     const tableToWhatsapp = <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
         <Row data={tableHeads} style={styles.head} textStyle={styles.headText} />
         <Rows data={productsToTable} textStyle={styles.text} />
@@ -49,24 +54,65 @@ function Cart({ navigation }) {
     const roundedTotal = totalCart.toFixed(2)
 
     async function updateFirebaseWithOrder() {
-        sendToWhatsapp();
+        // sendToWhatsapp();
         // setModalStatus(true)
-        // var userId = app.auth().currentUser.uid;
-        // return app.database().ref('/users/' + userId).once('value').then((snapshot) => {
-        //     var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-        //     var appatement = (snapshot.val() && snapshot.val().appatement) || null;
-        //     var floor = (snapshot.val() && snapshot.val().floor) || null;
-        //     var adress = (snapshot.val() && snapshot.val().adress) || null;
-        //     var email = (snapshot.val() && snapshot.val().email) || null;
+        var userId = app.auth().currentUser.uid;
+        return app.database().ref('/users/' + userId).once('value').then(async (snapshot) => {
+            var username = (snapshot.val() && snapshot.val().fullName) || 'אורח';
+            var appartement = (snapshot.val() && snapshot.val().appartement) || null;
+            var floor = (snapshot.val() && snapshot.val().floor) || null;
+            var adress = (snapshot.val() && snapshot.val().adress) || null;
+            var email = (snapshot.val() && snapshot.val().email) || null;
+            var phone = (snapshot.val() && snapshot.val().phone) || null;
 
-        //     writeNewPost(userId, username, adress, floor, appatement, email, productContainer)
-        //     // ...
-        //     console.log('finish');
-        // });
-        console.log('finish');
+            const requestUrl = serverRequests.mainUrl + serverRequests.post
+            // const requestUrl = "http://10.0.0.8:3000/posts"
+            // const requestUrl = "/posts"
+
+            const dataToServer = {
+                title: username,
+                adress: adress,
+                floor: floor,
+                appartement: appartement,
+                description: productContainer,
+                email: email,
+                phone: phone
+            }
+
+            console.log("dataToServer", dataToServer)
+
+            const dataFromServer = await axiosRequest(requestUrl, "post", dataToServer)
+
+            // writeNewPost(userId, username, adress, floor, appatement, email, productContainer)
+            console.log('finish');
+        });
 
     }
 
+    async function axiosRequest(url = "", method = "", data = {}) {
+        try {
+            let res = await axios({
+                url: url,
+                method: method,
+                data: data,
+
+                headers: {
+                    "content-type": "application/json",
+
+                    "Access-Control-Allow-Origin": "*",
+                },
+            });
+            let dataFromServer = res;
+            if (dataFromServer) {
+                return dataFromServer;
+            } else {
+                return null;
+            }
+        } catch (e) {
+            console.log(`😱 Axios failed cart 117: ${e}`);
+            return "";
+        }
+    }
     function writeNewPost(uid, username, adress, floor, appartement, email, order) {
 
         // A order entry.
@@ -99,16 +145,19 @@ function Cart({ navigation }) {
     }
     return (
         <SafeAreaView style={styles.container}>
-            <ImageBackground source={require('../assets/background/cart.jpg')} style={styles.container}>
-                {/* <ProductsContainer products={favoriteList} type={type} navigation={navigation} /> */}
-                <ScrollView>
+            <ImageBackground source={require('../assets/background/cart_2.jpg')} style={styles.container}>
+                {productContainer.length > 0 ? <ScrollView>
                     <View>
-                        <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
+                        {/* <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
                             <Row data={tableHeads} style={styles.head} textStyle={styles.headText} />
                             <Rows data={productsToTable} textStyle={styles.text} />
-                        </Table>
+                        </Table> */}
+                        <TableShow orders={favoriteList} navigation={navigation} />
                     </View>
-                </ScrollView>
+                </ScrollView> :
+                    <View style={{ flex: 1, alignItems: "center" }}>
+                        <Text style={{ color: "red", fontWeight: "bold", fontSize: 18 }}>אין פריטים בעגלה</Text>
+                    </View>}
                 {/* cart total */}
                 <View style={styles.totalText}>
                     <Text style={{ textAlign: "center", fontSize: 32, color: "white" }}>{"סהכ בעגלה: "} {roundedTotal ? roundedTotal : 0}{' ₪'}</Text>
@@ -168,7 +217,7 @@ const styles = StyleSheet.create({
         borderColor: colors.popularColor,
         borderWidth: 5
     },
-    head: { height: 40, backgroundColor: '#f1f8ff', alignItems: "center", fontWeight: "bold" },
+    head: { height: 40, backgroundColor: '#f1f8ff', alignItems: "center" },
     headText: { fontWeight: "bold", textAlign: "center" },
     text: { margin: 6, textAlign: "center" }
 });

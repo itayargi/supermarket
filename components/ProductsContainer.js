@@ -33,7 +33,7 @@ function ProductsContainer(props) {
                             <View style={{ flex: 1, alignItems: "center", marginTop: 50 }}>
                                 {/* in case of empty movies in favorite page */}
                                 <Text style={{ fontSize: 17, color: 'red' }}>
-                                    אין פריטים בעגלה
+                                    אין פריטים בקטגוריה זו
               </Text>
                             </View>
                         )}

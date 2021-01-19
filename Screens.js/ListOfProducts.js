@@ -20,7 +20,6 @@ import Categories from "../components/Categories";
 function ListOfProducts({ navigation, route }) {
     // const [products, setProducts] = useContext(DataStorage);
     const [favoriteList, setFavoriteList] = useContext(DataStorage);
-    const [movieList, setMovieList] = useState(route.productList);
     const { productList } = route.params
     // const { type } = route.params;
     const type = "allProducts"

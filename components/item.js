@@ -22,7 +22,6 @@ function item(props) {
         props.navigation.navigate("ItemDetails", {
             movie: movie,
             index: index,
-            type: props.type,
         });
     };
     function showTitleWords(str) {
