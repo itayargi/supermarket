@@ -7,7 +7,8 @@ import {
     StyleSheet,
     ImageBackground,
     Modal,
-    Alert
+    Alert,
+    ActivityIndicator
 } from 'react-native';
 import { DataStorage, serverRequests } from "../data/DataStorage";
 import colors from '../components/StylesGalery'
@@ -26,6 +27,7 @@ function Cart({ navigation }) {
 
     const [modalStatus, setModalStatus] = useState(false)
     const [favoriteList, setFavoriteList] = useContext(DataStorage);
+    const [loader, setLoader] = useState(false)
 
     const productContainer = favoriteList ? favoriteList.map((product) => {
         return {
@@ -43,6 +45,7 @@ function Cart({ navigation }) {
     const roundedTotal = totalCart.toFixed(2)
 
     async function updateFirebaseWithOrder() {
+        setLoader(true)
         // sendToWhatsapp();
         setModalStatus(false)
         var userId = app.auth().currentUser.uid;
@@ -74,6 +77,7 @@ function Cart({ navigation }) {
                 console.log('dataFromServer', dataFromServer.data);
                 const success = dataFromServer.data.success;
                 if (success) {
+                    setLoader(false)
                     Alert.alert('ההזמנה בוצעה בהצלחה :)')
                     setFavoriteList([])
                 }
@@ -157,6 +161,12 @@ function Cart({ navigation }) {
                     <View style={{ flex: 1, alignItems: "center" }}>
                         <Text style={{ color: "red", fontWeight: "bold", fontSize: 18 }}>אין פריטים בעגלה</Text>
                     </View>}
+                <View style={{ display: loader ? "flex" : "none" }}>
+
+                    <ActivityIndicator size="large" color={colors.colorSeafoamBlue} />
+                    <Text style={{ color: "white", textAlign: "center" }}>אנא המתן...</Text>
+                </View>
+
                 {/* cart total */}
                 <View style={styles.totalText}>
                     <Text style={{ textAlign: "center", fontSize: 32, color: "white" }}>{"סהכ בעגלה: "} {roundedTotal ? roundedTotal : 0}{' ₪'}</Text>

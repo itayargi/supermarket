@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         width: "25%",
         marginHorizontal: 10,
         marginVertical: 10,
-        height: Platform.OS == 'ios' ? "60%" : 150,
+        height: 130,
         shadowOffset: { width: 3, height: 3 },
         shadowOpacity: 0.5,
         shadowRadius: 7,

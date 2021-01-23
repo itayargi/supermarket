@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Platform, } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Platform, ScrollView, } from 'react-native';
 import colors from '../components/StylesGalery'
 import productsList from '../components/ProductsData.json'
 import Autocomplete from 'react-native-autocomplete-input';
@@ -101,21 +101,22 @@ function CategoriesOptions({ navigation }) {
                     {/* end */}
                 </View>}
             {/* {renderCategories} */}
-            <View style={styles.mainView}>
-                {categoryObj.map((category, index) => {
-                    return (
-                        <TouchableOpacity onPress={() => navigateWithProducts(category.category)} key={index} style={styles.categoryBox}>
-                            <ImageBackground source={{ uri: category.image }} style={styles.imageBackground}>
-                                <View style={{ backgroundColor: "grey", paddingVertical: 5 }}>
+            <ScrollView>
+                <View style={styles.mainView}>
+                    {categoryObj.map((category, index) => {
+                        return (
+                            <TouchableOpacity onPress={() => navigateWithProducts(category.category)} key={index} style={styles.categoryBox}>
+                                <ImageBackground source={{ uri: category.image }} style={styles.imageBackground}>
+                                    <View style={{ backgroundColor: "grey", paddingVertical: 5 }}>
 
-                                    <Text style={styles.categoryText}>{category.name}</Text>
-                                </View>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                    )
-                })}
-            </View>
-
+                                        <Text style={styles.categoryText}>{category.name}</Text>
+                                    </View>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        )
+                    })}
+                </View>
+            </ScrollView>
 
         </View>
     );
