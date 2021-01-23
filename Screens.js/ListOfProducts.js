@@ -54,19 +54,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    header: {
-        width: "100%",
-        alignItems: "center",
-        backgroundColor: '#022C80',
-        paddingBottom: 10,
-        opacity: 0.7,
-        paddingTop: 10,
-    },
-    textHeader: {
-        fontSize: 30,
-        fontWeight: "bold",
-        color: 'white',
-    },
+
 });
 
 export default ListOfProducts;

@@ -6,7 +6,8 @@ import {
     Linking,
     StyleSheet,
     ImageBackground,
-    Modal
+    Modal,
+    Alert
 } from 'react-native';
 import { DataStorage, serverRequests } from "../data/DataStorage";
 import colors from '../components/StylesGalery'
@@ -26,28 +27,16 @@ function Cart({ navigation }) {
     const [modalStatus, setModalStatus] = useState(false)
     const [favoriteList, setFavoriteList] = useContext(DataStorage);
 
-    const productContainer = favoriteList.map((product) => {
+    const productContainer = favoriteList ? favoriteList.map((product) => {
         return {
             name: product.title,
             amount: product.amount,
             barcode: product.code
         }
-    });
-    // console.log("array", productContainer)
-    const productsToTable = favoriteList.map((product) => {
-        return [
-            product.title.split(' ').slice(0, 2).join(' '), product.amount, '₪ ' + (product.amount * product.salePrice).toFixed(2)
-        ]
-    });
+    }) : 0;
 
-    const tableHeads = ["שם פריט", "כמות", "מחיר"]
-    // console.log("productsToTable", productsToTable)
-    const tableToWhatsapp = <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
-        <Row data={tableHeads} style={styles.head} textStyle={styles.headText} />
-        <Rows data={productsToTable} textStyle={styles.text} />
-    </Table>
+
     const whatsappMessage = "רשימת קניות חדשה\n \n" + JSON.stringify(productContainer) + "\n סוף ההזמנה"
-    const type = "cart"
     const totalCart = favoriteList.reduce(function (accumulator, currentValue) {
         return Number(accumulator) + (Number(currentValue.salePrice) * currentValue.amount)
     }, 0)
@@ -55,7 +44,7 @@ function Cart({ navigation }) {
 
     async function updateFirebaseWithOrder() {
         // sendToWhatsapp();
-        // setModalStatus(true)
+        setModalStatus(false)
         var userId = app.auth().currentUser.uid;
         return app.database().ref('/users/' + userId).once('value').then(async (snapshot) => {
             var username = (snapshot.val() && snapshot.val().fullName) || 'אורח';
@@ -79,12 +68,19 @@ function Cart({ navigation }) {
                 phone: phone
             }
 
-            console.log("dataToServer", dataToServer)
-
-            const dataFromServer = await axiosRequest(requestUrl, "post", dataToServer)
-
+            // console.log("dataToServer", dataToServer)
+            try {
+                const dataFromServer = await axiosRequest(requestUrl, "post", dataToServer)
+                console.log('dataFromServer', dataFromServer.data);
+                const success = dataFromServer.data.success;
+                if (success) {
+                    Alert.alert('ההזמנה בוצעה בהצלחה :)')
+                    setFavoriteList([])
+                }
+            } catch (err) {
+                console.log('error sending order ', err)
+            }
             // writeNewPost(userId, username, adress, floor, appatement, email, productContainer)
-            console.log('finish');
         });
 
     }
@@ -98,7 +94,6 @@ function Cart({ navigation }) {
 
                 headers: {
                     "content-type": "application/json",
-
                     "Access-Control-Allow-Origin": "*",
                 },
             });
@@ -137,21 +132,25 @@ function Cart({ navigation }) {
 
         return app.database().ref().update(updates);
     }
+    const sendBtn = () => {
+        if (roundedTotal == 0) {
+            Alert.alert('העגלה ריקה, יש להכניס מוצרים כדי לבצע הזמנה')
+        }
+        else if (roundedTotal < 50) {
+            Alert.alert('מינימום להזמנה עומד על 50 שח, יש להכניס עוד מוצרים לעגלה')
+        }
+        else {
+            setModalStatus(true)
+        }
 
 
-    const sendToWhatsapp = () => {
-
-        Linking.openURL(`whatsapp://send?text=${whatsappMessage}&phone=+972543112161`)
     }
+
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground source={require('../assets/background/cart_2.jpg')} style={styles.container}>
                 {productContainer.length > 0 ? <ScrollView>
                     <View>
-                        {/* <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
-                            <Row data={tableHeads} style={styles.head} textStyle={styles.headText} />
-                            <Rows data={productsToTable} textStyle={styles.text} />
-                        </Table> */}
                         <TableShow orders={favoriteList} navigation={navigation} />
                     </View>
                 </ScrollView> :
@@ -163,14 +162,14 @@ function Cart({ navigation }) {
                     <Text style={{ textAlign: "center", fontSize: 32, color: "white" }}>{"סהכ בעגלה: "} {roundedTotal ? roundedTotal : 0}{' ₪'}</Text>
                 </View>
                 {/* send btn */}
-                <TouchableOpacity onPress={() => updateFirebaseWithOrder()}>
+                <TouchableOpacity onPress={() => sendBtn()}>
                     <View style={styles.sendBtn}>
                         <Text style={{ color: "white", fontSize: 22, textAlign: "center" }}>שלח הזמנה</Text>
                     </View>
                 </TouchableOpacity>
             </ImageBackground>
             {/* modal */}
-            <ModalScreen sendToWhatsapp={sendToWhatsapp} status={modalStatus} title="האם לשלוח את ההזמנה?" yes="כן" no="לא" />
+            <ModalScreen yesPress={() => updateFirebaseWithOrder()} setModalStatus={setModalStatus} modalStatus={modalStatus} title="האם לשלוח את ההזמנה?" yes="כן" no="לא" />
 
         </SafeAreaView>
     );

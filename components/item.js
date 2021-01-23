@@ -4,7 +4,8 @@ import {
     Image,
     TouchableOpacity,
     View,
-    Text
+    Text,
+    Platform
 } from "react-native";
 import "react-native-gesture-handler";
 // import * as RootNavigation from "../RootNavigations.js";
@@ -69,10 +70,16 @@ function item(props) {
 
 const styles = StyleSheet.create({
     card: {
-        width: 100,
+        width: "25%",
         marginHorizontal: 10,
         marginVertical: 10,
-        height: 150,
+        height: Platform.OS == 'ios' ? "60%" : 150,
+        shadowOffset: { width: 3, height: 3 },
+        shadowOpacity: 0.5,
+        shadowRadius: 7,
+        shadowColor: "#000",
+        backgroundColor: "#FFFFFF",
+        elevation: 1
     },
     image: {
         flex: 1,
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         textAlign: "center",
-        fontSize: 18
+        fontSize: 17
     },
 });
 
