@@ -6,6 +6,8 @@ import {
     ImageBackground,
     TouchableOpacity,
     SafeAreaView,
+    TextInput,
+    KeyboardAvoidingView,
 } from "react-native";
 // import * as RootNavigation from "../RootNavigations.js";
 // import "react-native-gesture-handler";
@@ -15,7 +17,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 export default function ItemDetails({ route, navigation }) {
     // movie object and index
-    const { movie, index, type } = route.params;
+    const { movie, index } = route.params;
     // error message for user
     const [error, setError] = useState('');
     // favorite list
@@ -81,59 +83,67 @@ export default function ItemDetails({ route, navigation }) {
         <SafeAreaView style={styles.container}>
 
             <ImageBackground imageStyle={{ resizeMode: "contain", top: -200 }} style={styles.background} source={imageAdress}>
-                <View style={styles.detailsAndBtn}>
-                    {/* name */}
-                    <View style={styles.detailsSquere}>
-                        <View style={styles.detailLine}>
-                            <Text style={styles.headers}>שם פריט </Text>
-                            <Text style={styles.detailText}>{movie.title} </Text>
-                        </View>
-                        {/* summary */}
-                        <View style={styles.detailLine}>
-                            <Text style={styles.headers}>מחיר </Text>
-                            <Text style={styles.detailText}>{movie.salePrice + " שח"} </Text>
-                        </View>
-                        {/* rating */}
-                        <View style={styles.detailLine}>
-                            <Text style={styles.headers}>כמות</Text>
-                            <Text style={styles.detailText}>{productAmount} </Text>
-                        </View>
-                    </View>
-                    {/* error message in case of empty amount on cart */}
-                    {
-                        error.length > 0 ?
-                            <View style={styles.errorView}>
-                                <Text style={styles.error}>{error}</Text>
-                            </View>
-                            : null
-                    }
+                <KeyboardAvoidingView style={{ flex: 1 }} behavior="hight">
 
-                    {/* buttons - add && remove */}
-                    <View style={styles.btnsRow}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                addToCart();
-                            }}
-                            style={colors.btn}
-                        >
-                            <Text style={styles.btnText}>הוסף לעגלה</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => lessAmount(index)}
-                            style={colors.btn}
-                        >
-                            <Text style={styles.btnText}>הורד מעגלה</Text>
-                        </TouchableOpacity>
+                    <View style={styles.detailsAndBtn}>
+                        {/* name */}
+                        <View style={styles.detailsSquere}>
+                            <View style={styles.detailLine}>
+                                <Text style={styles.headers}>שם פריט </Text>
+                                <Text style={styles.detailText}>{movie.title} </Text>
+                            </View>
+                            {/* price */}
+                            <View style={styles.detailLine}>
+                                <Text style={styles.headers}>מחיר </Text>
+                                <Text style={styles.detailText}>{movie.salePrice + " שח"} </Text>
+                            </View>
+                            {/* amount */}
+                            <View style={styles.detailLine}>
+                                <Text style={styles.headers}>כמות</Text>
+                                <TextInput style={{ color: "white", textAlign: "center" }} value={productAmount.toString()}
+                                    onChangeText={(text) => setProductAmount(text)}
+                                    keyboardType="numeric"
+                                />
+                                {/* <Text style={styles.detailText}>{productAmount} </Text> */}
+                            </View>
+                        </View>
+                        {/* error message in case of empty amount on cart */}
+                        {
+                            error.length > 0 ?
+                                <View style={styles.errorView}>
+                                    <Text style={styles.error}>{error}</Text>
+                                </View>
+                                : null
+                        }
+
+                        {/* buttons - add && remove */}
+                        <View style={styles.btnsRow}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    addToCart();
+                                }}
+                                style={colors.btn}
+                            >
+                                <Text style={styles.btnText}>הוסף לעגלה</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => lessAmount(index)}
+                                style={colors.btn}
+                            >
+                                <Text style={styles.btnText}>הורד מעגלה</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ marginTop: 5, width: "100%", alignItems: "center" }}>
+                            <TouchableOpacity
+                                onPress={() => goBackBtn(productAmount)}
+                                style={[colors.btn, { backgroundColor: colors.favoriteColor }]}
+                            >
+                                <Text style={styles.btnText}>אשר</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={{ marginTop: 5, width: "100%", alignItems: "center" }}>
-                        <TouchableOpacity
-                            onPress={() => goBackBtn(productAmount)}
-                            style={[colors.btn, { backgroundColor: colors.favoriteColor }]}
-                        >
-                            <Text style={styles.btnText}>אשר</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                </KeyboardAvoidingView>
+
             </ImageBackground>
         </SafeAreaView>
     );
@@ -151,6 +161,7 @@ const styles = StyleSheet.create({
     },
     detailsAndBtn: {
         flex: 1,
+        height: "100%",
         justifyContent: "flex-end",
         alignItems: "center",
         paddingBottom: "10%",

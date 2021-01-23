@@ -32,6 +32,7 @@ const Dark = {
 function RegisterScreen({ navigation }) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [adress, setAdress] = useState("");
     const [floor, setFloor] = useState("");
@@ -57,9 +58,10 @@ function RegisterScreen({ navigation }) {
                             // data to send
                             email: result.user.email,
                             fullName: name,
+                            phone: phone,
                             adress: adress,
                             floor: floor,
-                            appatement: appartement,
+                            appartement: appartement,
                             created: Date.now(),
                             last_logged: Date.now(),
                         },
@@ -123,6 +125,19 @@ function RegisterScreen({ navigation }) {
                                 value={email}
                                 keyboardType="email-address"
                                 placeholder="כתובת מייל"
+                                placeholderTextColor={
+                                    mood === "Dark" ? Dark.Button : Light.Button
+                                }
+                            ></TextInput>
+                        </View>
+                        {/* phone */}
+                        <View>
+                            <TextInput
+                                style={styles(mood).input}
+                                onChangeText={(phone) => setPhone(phone)}
+                                value={phone}
+                                keyboardType="phone-pad"
+                                placeholder="טלפון ליצירת קשר"
                                 placeholderTextColor={
                                     mood === "Dark" ? Dark.Button : Light.Button
                                 }

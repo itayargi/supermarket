@@ -2,24 +2,23 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import colors from './StylesGalery'
 function ModalScreen(props) {
-    const [modalStatus, setModalStatus] = useState(props.status)
+    const modalStatus = props.modalStatus
     const yesPress = () => {
-        setModalStatus(false)
-        props.sendToWhatsapp()
+        props.yesPress()
     }
 
     const noPress = () => {
-        setModalStatus(false)
+        props.setModalStatus(false)
     }
     return (
-        <Modal visible={modalStatus}>
+        <Modal animationType="slide" transparent={true} visible={modalStatus}>
             <View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
                 <View style={{ width: "60%", direction: "rtl", height: "40%", backgroundColor: colors.colorWhite248RGB, borderColor: "black", borderWidth: 1, borderRadius: 15, alignSelf: "center", justifyContent: "space-around", alignItems: "center" }}>
                     {/* title */}
                     <Text style={{}}>{props.title}</Text>
                     <View style={{ flexDirection: "row", justifyContent: "space-around", width: "100%" }}>
                         {/* yes */}
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={yesPress}>
                             <View style={{ width: 50, height: 30, backgroundColor: colors.favoriteColor, borderRadius: 10, justifyContent: "center", alignItems: "center" }}>
                                 <Text style={{ color: "white" }}>{props.yes}</Text>
                             </View>

@@ -26,7 +26,7 @@
         "id": "3",
         "buyPrice": "9.84",
         "salePrice": "11.3",
-        "category": "2",
+        "category": "1",
         "supplier": "א.י. שיווק ביצים"
     },
     {
@@ -56,7 +56,7 @@
         "id": "6",
         "buyPrice": "2.1",
         "salePrice": "5",
-        "category": "13",
+        "category": "10",
         "supplier": "קוקה קולה"
     },
     {
@@ -86,7 +86,7 @@
         "id": "11",
         "buyPrice": "7.69",
         "salePrice": "16.9",
-        "category": "3",
+        "category": "2",
         "supplier": "מור לחם"
     },
     {
@@ -106,7 +106,7 @@
         "id": "13",
         "buyPrice": "1.55",
         "salePrice": "6",
-        "category": "13",
+        "category": "10",
         "supplier": "קוקה קולה"
     },
     {
@@ -116,7 +116,7 @@
         "id": "14",
         "buyPrice": "5.68",
         "salePrice": "7.9",
-        "category": "13",
+        "category": "10",
         "supplier": "קוקה קולה"
     },
     {
@@ -146,7 +146,7 @@
         "id": "18",
         "buyPrice": "4.73",
         "salePrice": "6",
-        "category": "13",
+        "category": "10",
         "supplier": "קוקה קולה"
     },
     {
@@ -156,7 +156,7 @@
         "id": "19",
         "buyPrice": "2.18",
         "salePrice": "6",
-        "category": "13",
+        "category": "10",
         "supplier": "משיח -עולם היין בעמ"
     },
     {
@@ -176,7 +176,7 @@
         "id": "21",
         "buyPrice": "3.14",
         "salePrice": "4.9",
-        "category": "8",
+        "category": "7",
         "supplier": "אסם יבשים"
     }
 ]

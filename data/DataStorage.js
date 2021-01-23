@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 
 export const DataStorage = createContext();
 export const serverRequests = {
-    mainUrl: "http://localhost:3000",
+    mainUrl: "http://10.0.0.8:3000",
     post: "/posts",
     get: "/posts"
 }

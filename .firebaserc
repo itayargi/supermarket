@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "supermarket-da4cc"
+    "default": "supermarket-da4cc",
+    "staging": "my-project-1508757045723"
   }
 }

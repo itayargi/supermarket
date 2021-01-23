@@ -33,7 +33,7 @@ function ProductsContainer(props) {
                             <View style={{ flex: 1, alignItems: "center", marginTop: 50 }}>
                                 {/* in case of empty movies in favorite page */}
                                 <Text style={{ fontSize: 17, color: 'red' }}>
-                                    אין פריטים בעגלה
+                                    אין פריטים בקטגוריה זו
               </Text>
                             </View>
                         )}
@@ -54,14 +54,8 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "center",
-    },
-    header: {
-        width: "100%",
-        alignItems: "center",
-        backgroundColor: '#022C80',
-        paddingBottom: 10,
-        opacity: 0.7,
-        paddingTop: 10,
+        flex: 1,
+        height: "100%",
     },
     textHeader: {
         fontSize: 30,

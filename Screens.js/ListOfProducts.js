@@ -20,7 +20,6 @@ import Categories from "../components/Categories";
 function ListOfProducts({ navigation, route }) {
     // const [products, setProducts] = useContext(DataStorage);
     const [favoriteList, setFavoriteList] = useContext(DataStorage);
-    const [movieList, setMovieList] = useState(route.productList);
     const { productList } = route.params
     // const { type } = route.params;
     const type = "allProducts"
@@ -55,19 +54,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    header: {
-        width: "100%",
-        alignItems: "center",
-        backgroundColor: '#022C80',
-        paddingBottom: 10,
-        opacity: 0.7,
-        paddingTop: 10,
-    },
-    textHeader: {
-        fontSize: 30,
-        fontWeight: "bold",
-        color: 'white',
-    },
+
 });
 
 export default ListOfProducts;
