@@ -44,6 +44,10 @@ function RegisterScreen({ navigation }) {
 
 
     const handleRegister = () => {
+        if (name == "" || email == "" || phone == "" || adress == "" || floor == "" || appartement == "" || password == "") {
+            setErrorMsg('יש למלא את כל השדות כדי להמשיך')
+            return;
+        }
         setLoading(true);
         app
             .auth()
@@ -92,7 +96,7 @@ function RegisterScreen({ navigation }) {
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <KeyboardAvoidingView style={styles(mood).container} behavior="height">
-                <View style={{ flex: 1, direction: "rtl", alignContent: "flex-start", alignItems: "flex-start" }}>
+                <View style={{ flex: 1, direction: "rtl", alignContent: "flex-start", alignItems: "flex-start", justifyContent: "space-around" }}>
                     {loading && <LoadingShow />}
                     {/* <Logo width={100} height={100} /> */}
                     {/* <LoadingScreen visible={loading} /> */}
@@ -151,7 +155,7 @@ function RegisterScreen({ navigation }) {
                                 secureTextEntry
                                 onChangeText={(pass) => setPassword(pass)}
                                 value={password}
-                                placeholder="סיסמא - לפחות 4 אותיות/מספרים"
+                                placeholder="סיסמא - לפחות 6 אותיות/מספרים"
                                 placeholderTextColor={
                                     mood === "Dark" ? Dark.Button : Light.Button
                                 }
@@ -227,7 +231,7 @@ const styles = (mood) =>
             flex: 1,
             paddingHorizontal: 20,
             backgroundColor: mood === "Dark" ? Dark.Background : Light.Background,
-            paddingTop: 85,
+            // paddingTop: 85,
         },
         button: {
             height: 50,
@@ -237,14 +241,14 @@ const styles = (mood) =>
             margin: 10,
             alignItems: "center",
             justifyContent: "center",
-            marginBottom: 30,
+            // marginBottom: 30,
         },
         btnsBox: {
             width: "100%",
             alignItems: "center",
-            flex: 0.1,
+            // flex: 0.1,
             justifyContent: "space-between",
-            marginTop: 30,
+            // marginTop: 30,
             // paddingBottom: 15,
         },
         buttonText: {
@@ -254,12 +258,7 @@ const styles = (mood) =>
         errorMessage: {
             alignItems: "center",
             justifyContent: "center",
-        },
-        form: {
-            // marginHorizontal: 20
-        },
-        greeting: {
-            textAlign: "center",
+            // position: "absolute"
         },
         inputTitle: {
             textTransform: "uppercase",
@@ -283,9 +282,10 @@ const styles = (mood) =>
         inputSpace: {
             width: "100%",
             flex: 0.6,
+            // height: "40%",
             justifyContent: "space-between",
-            paddingTop: 50,
-            marginBottom: 40,
+            // paddingTop: 50,
+            // marginBottom: 40,
         },
     });
 

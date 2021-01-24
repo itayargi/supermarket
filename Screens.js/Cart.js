@@ -8,18 +8,14 @@ import {
     ImageBackground,
     Modal,
     Alert,
-    ActivityIndicator
+    ActivityIndicator,
+    ScrollView,
+    TouchableOpacity
 } from 'react-native';
 import { DataStorage, serverRequests } from "../data/DataStorage";
 import colors from '../components/StylesGalery'
-import { AntDesign } from '@expo/vector-icons';
-import Item from "../components/item";
-import ProductsContainer from '../components/ProductsContainer';
-import SendToExcel from '../components/SendToExcel';
-import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import app from '../api/firebase'
 import ModalScreen from '../components/ModalScreen';
-import { Table, Row, Rows } from 'react-native-table-component';
 import axios from 'axios'
 import TableShow from '../components/TableShow';
 
