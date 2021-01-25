@@ -81,8 +81,6 @@ function LoginScreen({ navigation }) {
             <KeyboardAvoidingView style={styles(mood).container} behavior="height">
                 <View style={[styles(mood).screenStyles, { flex: 1 }]}>
                     {loading && <LoadingShow />}
-                    {/* <LoadingScreen visible={loading} /> */}
-                    {/* <Logo width={100} height={100} /> */}
                     <View style={styles(mood).errorMessage}>
                         {errorMsg && (
                             <Text style={{ color: colors.danger }}>{errorMsg}</Text>

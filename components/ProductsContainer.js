@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
         // backgroundColor: "white",
     },
     listOfMovies: {
-        flexDirection: "row",
-        flexWrap: "wrap",
+        // flexDirection: "row",
+        // flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "center",
         flex: 1,
-        height: "100%",
+        // height: "100%",
     },
     textHeader: {
         fontSize: 30,
