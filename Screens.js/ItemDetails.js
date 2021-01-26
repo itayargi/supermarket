@@ -61,7 +61,7 @@ export default function ItemDetails({ route, navigation }) {
         }
         setProductAmount(productAmount + 1)
     }
-    function goBackBtn(sum) {
+    function addProductToCart(sum) {
         if (productAmount > 0) {
             movie["amount"] = sum
             let duplicateMovies = favoriteList.find(
@@ -135,7 +135,7 @@ export default function ItemDetails({ route, navigation }) {
                         </View>
                         <View style={{ marginTop: 5, width: "100%", alignItems: "center" }}>
                             <TouchableOpacity
-                                onPress={() => goBackBtn(productAmount)}
+                                onPress={() => addProductToCart(productAmount)}
                                 style={[colors.btn, { backgroundColor: colors.favoriteColor }]}
                             >
                                 <Text style={styles.btnText}>אשר</Text>
