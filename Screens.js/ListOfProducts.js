@@ -15,7 +15,6 @@ import { AntDesign } from '@expo/vector-icons';
 import Supermaket from "../components/ProductsData.json"
 import ProductsContainer from "../components/ProductsContainer";
 import Header from "../components/Header";
-import Categories from "../components/Categories";
 
 function ListOfProducts({ navigation, route }) {
     // const [products, setProducts] = useContext(DataStorage);
