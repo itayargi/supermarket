@@ -24,7 +24,8 @@ const Item = ({ order, navigation }) => (
 );
 
 function Manager({ navigation }) {
-    const [orders, setOrders] = useContext(DataStorage)
+    // const [orders, setOrders] = useContext(DataStorage)
+    const [favoriteList, setFavoriteList] = useContext(DataStorage)
 
     const renderItem = ({ item }) => (
         <Item navigation={navigation} order={item} />
@@ -66,7 +67,7 @@ function Manager({ navigation }) {
                         </View>
 
                         <FlatList
-                            data={orders}
+                            data={favoriteList}
                             renderItem={renderItem}
                             keyExtractor={item => item._id}
                             style={{flex:1}}

@@ -19,7 +19,7 @@ import {DataStorage} from '../data/DataStorage'
 Platform.OS !== "web" && LogBox.ignoreAllLogs();
 
 function MangerWelcome({ navigation, route }) {
-    const [orders, setOrders] = useContext(DataStorage)
+    const [favoriteList, setFavoriteList] = useContext(DataStorage)
 
   const imageBack =
     "https://heartsell.co.il/wp-content/uploads/2019/09/%D7%9C%D7%94%D7%99%D7%95%D7%AA-%D7%9E%D7%A0%D7%94%D7%9C.jpg";
@@ -44,7 +44,7 @@ function MangerWelcome({ navigation, route }) {
     console.log('axios server get', server)
     const dataFromServer = await axiosRequest(server)
     // console.log("dataFromServer", dataFromServer)
-    setOrders(dataFromServer.data)
+    setFavoriteList(dataFromServer.data)
 }
 
 
