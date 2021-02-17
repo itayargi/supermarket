@@ -6,9 +6,7 @@ import {
     Image,
     StyleSheet,
 } from "react-native";
-import Item from "../components/item";
-// import "react-native-gesture-handler";
-// import * as RootNavigation from "../RootNavigations.js";
+import Item from "../components/Item";
 import { DataStorage } from "../data/DataStorage";
 import colors from '../components/StylesGalery'
 import { AntDesign } from '@expo/vector-icons';

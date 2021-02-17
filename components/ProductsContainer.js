@@ -5,7 +5,7 @@ import {
     ScrollView,
     StyleSheet,
 } from "react-native";
-import Item from "./item";
+import Item from "./Item";
 import colors from './StylesGalery'
 import { AntDesign } from '@expo/vector-icons';
 

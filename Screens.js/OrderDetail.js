@@ -1,29 +1,17 @@
-import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native';
+import React,{useContext} from 'react';
+import { View, Text, StyleSheet, ImageBackground, ScrollView, Button,Dimensions, Alert } from 'react-native';
 import { Table, Row, Rows } from 'react-native-table-component';
+import {DataStorage} from '../data/DataStorage'
 
-function OrderDetail({ route }) {
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height 
+
+function OrderDetail({ route, navigation }) {
     const { order } = route.params
-    console.log(order)
-    // order example
-    // const order = {
-    //     title: "itay",
-    //     _id: "65465sfaa6sd5f4f",
-    //     adress: "המלך גורג 34",
-    //     appartement: "2",
-    //     floor: "1",
-    //     isDone: false,
-    //     description: [
-    //         {
-    //             "amount": 4, "barcode": "8693134", "name": "דניאלה  תות",
-    //         },
-    //         {
-    //             "amount": 3, "barcode": "7290004584528", "name": "דנונה ביו 1.7% 200גר'",
-    //         }, {
-    //             "amount": 2, "barcode": "4127329", "name": "קוטג' 5% תנובה 250גר'",
-    //         },
-    //     ]
-    // }
+    const [orders, setOrders] = useContext(DataStorage)
+
+    console.log("orderID",order._id)
+  
     const tableHeads = ["שם פריט", "כמות", "ברקוד"]
 
     const productsToTable = order && order.description.map((product) => {
@@ -32,11 +20,28 @@ function OrderDetail({ route }) {
         ]
     });
     const fullAdress = order && order.adress + ", קומה:" + order.floor + ", דירה:" + order.appartement
+
+    function changeStatusToOrder( id) {
+        for (var i in orders) {
+          if (orders[i]._id == id) {
+            orders[i].isDone = !orders[i].isDone;
+            console.log('done');
+             break; //Stop this loop, we found it!
+          }
+        }
+        Alert.alert('סטטוס הזמנה שונה')
+        navigation.push('Manager')
+        // order.isDone
+        // setOrders(orders)
+     }
+
+     
     return (
         <View style={styles.container}>
             <ImageBackground style={styles.container} >
                 {/* padding ScrollView */}
-                <ScrollView style={{ paddingHorizontal: 10 }}>
+                <ScrollView contentContainerStyle={{height:deviceHeight, justifyContent:"space-between",padding: 10, }} style={{  flex:1 , }}>
+                <View>
 
                     {/* name & adress */}
                     <View style={styles.nameAndAdress}>
@@ -55,11 +60,17 @@ function OrderDetail({ route }) {
                     </View>
                     <Text style={{ textAlign: "center", fontSize: 16, fontWeight: "bold", textDecorationLine: "underline" }}>רשימת הזמנה</Text>
                     {/* table */}
-                    <View style={{}}>
+                    <View>
                         <Table style={{ width: "100%" }} borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
                             <Row data={tableHeads} style={styles.head} textStyle={styles.headText} />
                             <Rows data={productsToTable} textStyle={styles.text} />
                         </Table>
+                    </View>
+                    </View>
+                   
+                    {/* btn */}
+                    <View style={styles.sendBtn}>
+                        <Button onPress={()=>changeStatusToOrder(order._id)} title="שלח הזמנה" />
                     </View>
                 </ScrollView>
             </ImageBackground>
@@ -90,7 +101,9 @@ const styles = StyleSheet.create({
     },
     head: { height: 40, backgroundColor: '#f1f8ff', alignItems: "center" },
     headText: { fontWeight: "bold", textAlign: "center", height: 30 },
-    text: { margin: 6, textAlign: "center" }
+    text: { margin: 6, textAlign: "center" },
+    sendBtn:{ marginBottom:10},
+    // sendBtn:{position:"absolute",width:deviceWidth , height:deviceHeight * 85/100, justifyContent:"flex-end" },
 });
 
 export default OrderDetail;

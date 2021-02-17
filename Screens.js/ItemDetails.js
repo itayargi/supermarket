@@ -76,6 +76,8 @@ export default function ItemDetails({ route, navigation }) {
                 newCart.push(movie)
                 setFavoriteList(newCart)
             }
+            console.log('product:',movie);
+
         }
         navigation.goBack()
     }

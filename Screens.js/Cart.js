@@ -34,7 +34,7 @@ function Cart({ navigation }) {
     }) : 0;
 
 
-    const whatsappMessage = "רשימת קניות חדשה\n \n" + JSON.stringify(productContainer) + "\n סוף ההזמנה"
+    // const whatsappMessage = "רשימת קניות חדשה\n \n" + JSON.stringify(productContainer) + "\n סוף ההזמנה"
     const totalCart = favoriteList.reduce(function (accumulator, currentValue) {
         return Number(accumulator) + (Number(currentValue.salePrice) * currentValue.amount)
     }, 0)
@@ -151,9 +151,9 @@ function Cart({ navigation }) {
         <SafeAreaView style={styles.container}>
             <ImageBackground source={require('../assets/background/cart_2.jpg')} style={styles.container}>
                 {productContainer.length > 0 ? <ScrollView>
-                    <View>
+                    {/* <View> */}
                         <TableShow orders={favoriteList} navigation={navigation} />
-                    </View>
+                    {/* </View> */}
                 </ScrollView> :
                     <View style={{ flex: 1, alignItems: "center" }}>
                         <Text style={{ color: "red", fontWeight: "bold", fontSize: 18 }}>אין פריטים בעגלה</Text>

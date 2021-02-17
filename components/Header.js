@@ -4,7 +4,7 @@ import colors from './StylesGalery'
 function Header(props) {
     return (
         <View>
-            <TouchableOpacity onPress={() => props.navigation.navigate('Cart')}>
+            <TouchableOpacity onPress={() => props.navigation.push('Cart')}>
                 <View style={styles.btnBox}>
                     <Text style={{ color: "white" }}>
                         {props.title}

@@ -42,7 +42,7 @@ function LoginScreen({ navigation }) {
     const handleLogin = () => {
         // manager page
         if (email == 'baji@gmail.com' && password == 'king') {
-            navigation.navigate('Manager');
+            navigation.navigate('ManagerWelcome');
             return;
         }
         setLoading(true);

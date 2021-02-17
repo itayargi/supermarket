@@ -8,11 +8,9 @@ export const serverRequests = {
 }
 export const MyProvider = (props) => {
     const [favoriteList, setFavoriteList] = useState([]);
-    const [products, setProducts] = useState([{
-        flag: 0
-    }]);
+    const [orders, setOrders] = useState([]);
     return (
-        <DataStorage.Provider value={[favoriteList, setFavoriteList, products, setProducts]}>
+        <DataStorage.Provider value={[favoriteList, setFavoriteList, orders, setOrders]}>
             {props.children}
         </DataStorage.Provider>
     );
