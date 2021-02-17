@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, ImageBackground } from 'react-native';
-import { Table, Row, Rows } from 'react-native-table-component';
-import { axiosRequest } from '../components/FunctionsUtils'
-import { serverRequests } from '../data/DataStorage'
-import axios from 'axios'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, { useContext, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, ImageBackground, ScrollView,TouchableOpacity } from 'react-native';
+// import { axiosRequest } from '../components/FunctionsUtils'
+// import { serverRequests } from '../data/DataStorage'
+import {DataStorage} from '../data/DataStorage'
 
 const Item = ({ order, navigation }) => (
-    <TouchableOpacity onPress={() => navigation.navigate('OrderDetail', { order: order })}>
+    <TouchableOpacity onPress={() => navigation.navigate('OrderDetail',{order})}>
         <View style={styles.itemLine}>
             <View>
                 <Text style={styles.itemText} >{order.title}</Text>
+            </View>
+            <View>
+                <Text style={styles.itemText} >12:00</Text>
             </View>
             <View>
                 <Text style={styles.itemText}>{order.adress}</Text>
@@ -23,38 +24,38 @@ const Item = ({ order, navigation }) => (
 );
 
 function Manager({ navigation }) {
-    const [orders, setOrders] = useState()
-
-
-
+    const [orders, setOrders] = useContext(DataStorage)
 
     const renderItem = ({ item }) => (
         <Item navigation={navigation} order={item} />
     );
-    async function getOrdersFromServer() {
-        const server = serverRequests.mainUrl + serverRequests.post
-        console.log('axios server get', server)
-        const dataFromServer = await axiosRequest(server)
-        console.log("dataFromServer", dataFromServer)
-        setOrders(dataFromServer.data)
-    }
+    // async function getOrdersFromServer() {
+    //     const server = serverRequests.mainUrl + serverRequests.post
+    //     console.log('axios server get', server)
+    //     const dataFromServer = await axiosRequest(server)
+    //     // console.log("dataFromServer", dataFromServer)
+    //     setOrders(dataFromServer.data)
+    // }
 
 
-    useEffect(() => {
-        getOrdersFromServer()
-    }, [])
+    // useEffect(() => {
+    //     getOrdersFromServer()
+    // }, [])
     return (
         <View style={styles.container}>
             <ImageBackground
                 style={{ flex: 1 }}
                 source={require("../assets/background/welcome.jpg")}
             >
-                <View style={{ width: "100%", alignItems: "center" }}>
+                <View style={{flex:1, alignItems: "center" }}>
                     <Text style={{ fontSize: 18 }}>הזמנות</Text>
-                    <View style={{ width: "100%" }}>
+                    <View style={{ flex:1 }}>
                         <View style={styles.itemLine}>
                             <View>
                                 <Text style={styles.headerText} >שם</Text>
+                            </View>
+                            <View>
+                                <Text style={styles.headerText} >שעת הזמנה</Text>
                             </View>
                             <View>
                                 <Text style={styles.headerText} >כתובת</Text>
@@ -68,6 +69,7 @@ function Manager({ navigation }) {
                             data={orders}
                             renderItem={renderItem}
                             keyExtractor={item => item._id}
+                            style={{flex:1}}
                         />
                     </View>
                 </View>

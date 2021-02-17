@@ -10,6 +10,9 @@ import {
 } from "react-native";
 import "react-native-gesture-handler";
 import colors from '../components/StylesGalery'
+import productsList from '../components/ProductsData.json';
+import productCategories from '../data/productsCategories';
+
 
 Platform.OS !== "web" && LogBox.ignoreAllLogs();
 
@@ -18,7 +21,7 @@ function Welcome({ navigation, route }) {
 
     // navigate to popular page (props of popular)
     const goToPopular = () => {
-        navigation.navigate("CategoriesOptions");
+        navigation.navigate("CategoriesOptions",{productsList, productCategories});
     };
     // navigate to favorite page (props of favorite)
     const goToFavorite = () => {

@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Welcome from '../Screens.js/Welcome'
 import ListOfProducts from '../Screens.js/ListOfProducts';
-import item from '../components/item';
+import Item from '../components/Item';
 import ItemDetails from '../Screens.js/ItemDetails';
 import { MyProvider } from '../data/DataStorage'
 import Cart from '../Screens.js/Cart';
@@ -16,7 +16,7 @@ import CategoriesOptions from '../Screens.js/CategoriesOptions';
 import LoadingPage from '../Screens.js/LoadingPage';
 import Manager from '../Screens.js/Manager';
 import OrderDetail from '../Screens.js/OrderDetail';
-
+import ManagerWelcome from '../Screens.js/ManagerWelcome'
 const Stack = createStackNavigator();
 
 function AppNavigator(props) {
@@ -36,6 +36,9 @@ function AppNavigator(props) {
                     <Stack.Screen name="Home" options={{ headerShown: false, title: "עמוד הבית" }}>
                         {(props) => <Welcome {...props} />}
                     </Stack.Screen>
+                    <Stack.Screen name="ManagerWelcome" options={{ headerShown: false, title: "עמוד הבית" }}>
+                        {(props) => <ManagerWelcome {...props} />}
+                    </Stack.Screen>
                     <Stack.Screen name="OrderDetail" options={{ title: "פרטי הזמנה" }}>
                         {(props) => <OrderDetail {...props} />}
                     </Stack.Screen>
@@ -50,7 +53,7 @@ function AppNavigator(props) {
                         {(props) => <Manager {...props} />}
                     </Stack.Screen>
                     <Stack.Screen name="Item" options={{ headerShown: false }}>
-                        {(props) => <item {...props} />}
+                        {(props) => <Item {...props} />}
                     </Stack.Screen>
                     <Stack.Screen name="LogginScreen" options={{ title: "התחברות", headerLeft: null }}>
                         {(props) => <LoginScreen {...props} />}

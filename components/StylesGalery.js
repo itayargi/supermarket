@@ -14,7 +14,10 @@ export default {
     IndianRed: "#CD5C5C",
     DarkRed: "#8B0000",
     // color
+    colorCoolGrey: "#b4b3bf",
+    colorBattleshipGrey: "#797983",
     colorBlack: "#000000",
+    tomato: "tomato",
     colorWhite: "#FFFFFF",
     colorWhite248RGB: "#f8f8f8",
     colorBlueDark: "#22324b",

@@ -24,7 +24,7 @@ function Cart({ navigation }) {
     const [modalStatus, setModalStatus] = useState(false)
     const [favoriteList, setFavoriteList] = useContext(DataStorage);
     const [loader, setLoader] = useState(false)
-
+    const deliveryPrice = 15;
     const productContainer = favoriteList ? favoriteList.map((product) => {
         return {
             name: product.title,
@@ -34,11 +34,12 @@ function Cart({ navigation }) {
     }) : 0;
 
 
-    const whatsappMessage = "רשימת קניות חדשה\n \n" + JSON.stringify(productContainer) + "\n סוף ההזמנה"
+    // const whatsappMessage = "רשימת קניות חדשה\n \n" + JSON.stringify(productContainer) + "\n סוף ההזמנה"
     const totalCart = favoriteList.reduce(function (accumulator, currentValue) {
         return Number(accumulator) + (Number(currentValue.salePrice) * currentValue.amount)
     }, 0)
-    const roundedTotal = totalCart.toFixed(2)
+    const tatalAndDelivery = totalCart > 0 ? totalCart + deliveryPrice : 0
+    const roundedTotal = tatalAndDelivery.toFixed(2)
 
     async function updateFirebaseWithOrder() {
         setLoader(true)
@@ -150,9 +151,9 @@ function Cart({ navigation }) {
         <SafeAreaView style={styles.container}>
             <ImageBackground source={require('../assets/background/cart_2.jpg')} style={styles.container}>
                 {productContainer.length > 0 ? <ScrollView>
-                    <View>
+                    {/* <View> */}
                         <TableShow orders={favoriteList} navigation={navigation} />
-                    </View>
+                    {/* </View> */}
                 </ScrollView> :
                     <View style={{ flex: 1, alignItems: "center" }}>
                         <Text style={{ color: "red", fontWeight: "bold", fontSize: 18 }}>אין פריטים בעגלה</Text>
@@ -165,7 +166,22 @@ function Cart({ navigation }) {
 
                 {/* cart total */}
                 <View style={styles.totalText}>
-                    <Text style={{ textAlign: "center", fontSize: 32, color: "white" }}>{"סהכ בעגלה: "} {roundedTotal ? roundedTotal : 0}{' ₪'}</Text>
+                    {/* addons */}
+                    <View style={[styles.totalLine, { display: totalCart !== 0 ? "flex" : "none" }]}>
+                        {/* <Text style={{ textAlign: "center", fontSize: 16, }}>{"תוספת משלוח: "}</Text> */}
+                        <Text style={{ textAlign: "center", fontSize: 15, }}>{"סהכ בעגלה: "}</Text>
+                        <Text style={{ fontSize: 12 }}> {totalCart.toFixed(2)}{' ₪'}</Text>
+                    </View>
+                    <View style={[styles.totalLine, { display: totalCart !== 0 ? "flex" : "none" }]}>
+                        <Text style={{ textAlign: "center", fontSize: 15, }}>{"תוספת משלוח: "}</Text>
+                        <Text style={{ fontSize: 12 }}> {deliveryPrice}{' ₪'}</Text>
+                    </View>
+                    {/* total */}
+                    <View style={styles.totalLine}>
+                        <Text style={{ textAlign: "center", fontSize: 22, fontWeight: "500" }}>{"סהכ הזמנה: "}</Text>
+                        <Text style={{ fontWeight: "500", fontSize: 18 }}> {roundedTotal ? roundedTotal : 0}{' ₪'}</Text>
+                    </View>
+
                 </View>
                 {/* send btn */}
                 <TouchableOpacity onPress={() => sendBtn()}>
@@ -207,10 +223,18 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     totalText: {
-        backgroundColor: "#022C80",
+        backgroundColor: "#dcdcdc",
         width: "100%",
-        borderWidth: 1,
-        borderColor: "white",
+        paddingHorizontal: 5,
+        // borderWidth: 1,
+        // borderColor: "white",
+    },
+    totalLine: {
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
+        flexDirection: "row",
+
     },
     sendBtn: {
         alignSelf: "center",
