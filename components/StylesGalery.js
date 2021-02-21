@@ -21,9 +21,9 @@ export default {
     colorWhite: "#FFFFFF",
     colorWhite248RGB: "#f8f8f8",
     colorBlueDark: "#22324b",
-    // popular btn color
+    // product btn color
     popularColor: "#2F80ED",
-    // favorite btn color
+    // cart btn color
     favoriteColor: "#01A3FE",
     // home page btns
     categoryBtn: {

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ImageBackground, ScrollView,TouchableOpacity } from 'react-native';
-// import { axiosRequest } from '../components/FunctionsUtils'
-// import { serverRequests } from '../data/DataStorage'
 import {DataStorage} from '../data/DataStorage'
+import { serverRequests } from '../data/DataStorage'
+import { axiosRequest } from '../components/FunctionsUtils';
 
 const Item = ({ order, navigation }) => (
     <TouchableOpacity onPress={() => navigation.navigate('OrderDetail',{order})}>
@@ -24,24 +24,22 @@ const Item = ({ order, navigation }) => (
 );
 
 function Manager({ navigation }) {
-    // const [orders, setOrders] = useContext(DataStorage)
     const [favoriteList, setFavoriteList] = useContext(DataStorage)
 
     const renderItem = ({ item }) => (
         <Item navigation={navigation} order={item} />
     );
-    // async function getOrdersFromServer() {
-    //     const server = serverRequests.mainUrl + serverRequests.post
-    //     console.log('axios server get', server)
-    //     const dataFromServer = await axiosRequest(server)
-    //     // console.log("dataFromServer", dataFromServer)
-    //     setOrders(dataFromServer.data)
-    // }
-
-
-    // useEffect(() => {
-    //     getOrdersFromServer()
-    // }, [])
+    async function getOrdersFromServer() {
+        const server = serverRequests.mainUrl + serverRequests.post
+        console.log('axios server get', server)
+        const dataFromServer = await axiosRequest(server,"get")
+        setFavoriteList(dataFromServer.data)
+    }
+    
+    
+    useEffect(() => {
+        getOrdersFromServer()
+    }, [])
     return (
         <View style={styles.container}>
             <ImageBackground

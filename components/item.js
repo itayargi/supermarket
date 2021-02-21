@@ -10,8 +10,6 @@ import {
   Platform,
   Alert,
 } from "react-native";
-// import "react-native-gesture-handler";
-// import * as RootNavigation from "../RootNavigations.js";
 import colors from "./StylesGalery";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -35,6 +33,7 @@ function Item(props) {
   const productImage = imageUrl ? imageAdress : Uc;
   const [buyGif, setBuyGif] = useState("none");
   const [productAmount, setProductAmount] = useState(amountP);
+
   const clickPress = (movie, index) => {
     props.navigation.navigate("ItemDetails", {
       movie: movie,
@@ -54,14 +53,15 @@ function Item(props) {
   };
   //   remove product from cart list
   const removeProductFromFavorite = (index) => {
-    // setError('')
-    setFavoriteList(favoriteList.filter((item) => item.id !== index));
+    let newList = favoriteList.filter((item) => item.id !== index)
+    setFavoriteList(newList);
   };
   const ShadowForAndroid = ({ children }) => {
     if (Platform.OS === "android") {
       return <BoxShadow setting={shadowOpt}>{children}</BoxShadow>;
     } else return children;
   };
+  // display 2 words title
   function showTitleWords(str) {
     if (str) {
       const splitStr = str.split(" ").slice(0, 2).join(" ");
@@ -82,9 +82,10 @@ function Item(props) {
       let duplicateMovies = favoriteList.find(
         (movieObj) => movieObj.id == product.id
       );
-      // if the movie is not on the list, save it to favorite list
+      // if the product is not on the list, save it to favorite list
       if (duplicateMovies == undefined) {
         setFavoriteList([...favoriteList, product]);
+        // else, remove the old prodcut and save the new one
       } else {
         let newCart = favoriteList.filter((item) => item.id !== product.id);
         newCart.push(product);
@@ -103,10 +104,7 @@ function Item(props) {
   }
   const addToCart = (amount) => {
     setBuyGif("flex");
-    // setProductAmount(0)
     addProductToCart(amount);
-    // updateProductAmount(product, productAmount)
-    // Alert.alert('הפריט נוסף לעגלה')
   };
   // animation when order
   const FadeInView = (props) => {
@@ -230,7 +228,6 @@ function Item(props) {
                 style={{ marginRight: 5 }}
                 onPress={() => addAmount()}
               >
-                {/* <AntDesign name="pluscircle" size={27} color="blue" /> */}
                 <AntDesign name="pluscircleo" size={27} color={colors.tomato} />
               </TouchableOpacity>
               <View
@@ -250,7 +247,6 @@ function Item(props) {
                   size={27}
                   color={colors.tomato}
                 />
-                {/* <AntDesign name="minuscircle" size={27} color="red" /> */}
               </TouchableOpacity>
             </View>
             {/* add btn */}
@@ -275,18 +271,9 @@ function Item(props) {
               </Text>
             </TouchableOpacity>
           </View>
-
-          {/* <View >
-                    <Text numberOfLines={1} style={styles.headerText}>{productName}</Text>
-                </View>
-                <Image
-                    style={styles.image}
-                    source={props.movie.image ? imageAdress : Uc}
-                /> */}
         </View>
       </TouchableOpacity>
     </ShadowForAndroid>
-    /* </BoxShadow> */
   );
 }
 

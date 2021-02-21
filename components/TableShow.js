@@ -5,8 +5,6 @@ function TableShow(props) {
     const [orders, setOrders] = useState(props.orders)
     const navigation = props.navigation;
 
-
-
     const Item = ({ order, navigation }) => {
         const totalPrice = order.amount * order.salePrice;
         const title = order.title.split(' ').slice(0, 2).join(' ')
@@ -71,7 +69,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         borderBottomWidth: 1,
         borderColor: "grey",
-        // backgroundColor: "#c8e1ff",
         height: 40,
         alignItems: "center", paddingHorizontal: 10
     },

@@ -19,11 +19,11 @@ Platform.OS !== "web" && LogBox.ignoreAllLogs();
 function Welcome({ navigation, route }) {
     const { username } = route.params !== undefined ? route.params : "אורח\ת"
 
-    // navigate to popular page (props of popular)
+    // navigate to products page (props of products & categories)
     const goToPopular = () => {
         navigation.navigate("CategoriesOptions",{productsList, productCategories});
     };
-    // navigate to favorite page (props of favorite)
+    // navigate to cart page 
     const goToFavorite = () => {
         navigation.navigate("Cart");
     };

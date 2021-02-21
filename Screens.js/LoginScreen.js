@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import app from "../api/firebase";
 import colors from "../components/StylesGalery";
-// import Logo from "../components/Logo";
 import AuthContext from '../data/AuthContext'
 import LoadingShow from "../components/LoadingShow";
 
@@ -40,7 +39,7 @@ function LoginScreen({ navigation }) {
     const authContext = useContext(AuthContext);
 
     const handleLogin = () => {
-        // manager page
+        // MANAGER PAGE
         if (email == 'baji@gmail.com' && password == 'king') {
             navigation.navigate('ManagerWelcome');
             return;
@@ -54,12 +53,8 @@ function LoginScreen({ navigation }) {
                 app.database().ref('/users/' + result.user.uid).once('value').then(async (snapshot) => {
                     var username = await (snapshot.val() && snapshot.val().fullName) || 'Anonymous';
                     console.log('userName', username)
-
                     navigation.push('Home', { username });
-                    // ...
                 });
-                // navigation.push('Home');
-
             })
             .catch((error) => {
                 setErrorMsg(error.message);
@@ -88,7 +83,6 @@ function LoginScreen({ navigation }) {
                     </View>
 
                     <View style={styles(mood).inputMarg}>
-                        {/* <Text style={styles(mood).smalltext}>Email Address: </Text> */}
                         <TextInput
                             style={styles(mood).input}
                             autoCapitalize="none"
@@ -103,7 +97,6 @@ function LoginScreen({ navigation }) {
                     </View>
 
                     <View style={styles(mood).inputMarg}>
-                        {/* <Text style={styles(mood).smalltext}>Password: </Text> */}
                         <TextInput
                             style={styles(mood).input}
                             autoCapitalize="none"
@@ -192,7 +185,6 @@ const styles = (mood) =>
             alignItems: "center",
             justifyContent: "center",
             height: 20,
-            // marginHorizontal: 10
         },
         greeting: {
             textAlign: "center",
@@ -210,7 +202,6 @@ const styles = (mood) =>
             color: mood === "Dark" ? Dark.Base : Light.Base,
             paddingBottom: 5,
             textAlign: "right"
-            // placeholder: mood === "Dark" ? Dark.Base : Light.Base,
         },
         smalltext: {
             color: mood === "Dark" ? Dark.Base : Light.Base,

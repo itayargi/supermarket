@@ -1,10 +1,11 @@
 import axios from 'axios'
 
-export const axiosRequest = async (url = "") => {
+export const axiosRequest = async (url = "", method, data) => {
     try {
         let res = await axios({
             url: url,
-            method: "GET",
+            method: method,
+            data:data,
             headers: {
                 "content-type": "application/json",
                 // "Access-Control-Allow-Origin": "*",

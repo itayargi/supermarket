@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Platform, ScrollView, } from 'react-native';
 import colors from '../components/StylesGalery'
-// import productsList from '../components/ProductsData.json'
 import Autocomplete from 'react-native-autocomplete-input';
 import Header from '../components/Header';
 
 function CategoriesOptions({navigation, route}) {
     const{productCategories,productsList}= route.params
     const categoryObj = productCategories
-    // const productsList = props.productsList
-    // const navigation = props.navigation
     const [productsCart, setProductsCart] = useState(productsList);
     const [searchInput, setSearchInput] = useState("");
 

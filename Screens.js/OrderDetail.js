@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useState } from "react";
 import {
   View,
   Text,
@@ -13,11 +13,14 @@ import { Table, Row, Rows } from "react-native-table-component";
 import { DataStorage } from "../data/DataStorage";
 import { serverRequests } from "../data/DataStorage";
 import { updateOrder } from "../components/FunctionsUtils";
+import { axiosRequest } from "../components/FunctionsUtils";
+import ModalScreen from "../components/ModalScreen";
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 
 function OrderDetail({ route, navigation }) {
+  const [modalStatus, setModalStatus] = useState(false);
   const { order } = route.params;
   const [orders, setOrders] = useContext(DataStorage);
 
@@ -37,8 +40,15 @@ function OrderDetail({ route, navigation }) {
   const updateOrderRequest = (orderId) => {
     let url = serverRequests.mainUrl + serverRequests.post + `/${orderId}`;
     console.log(("update order", url));
-    let res = updateOrder(url,{isDone:true});
+    let res = updateOrder(url, { isDone: true });
     res.then(() => console.log("response", res));
+  };
+  const deleteOrder = (orderId) => {
+    let url = serverRequests.mainUrl + serverRequests.post + `/${orderId}`;
+    let deleted = axiosRequest(url, "delete");
+    deleted.then(() => console.log("deleted", deleted));
+    setModalStatus(false);
+    navigation.push("Manager");
   };
 
   function changeStatusToOrder(id) {
@@ -66,6 +76,15 @@ function OrderDetail({ route, navigation }) {
           }}
           style={{ flex: 1 }}
         >
+          <ModalScreen
+            yesPress={() => deleteOrder(order._id)}
+            setModalStatus={setModalStatus}
+            modalStatus={modalStatus}
+            title="האם למחוק את ההזמנה?"
+            yes="כן"
+            no="לא"
+          />
+
           <View>
             {/* name & adress */}
             <View style={styles.nameAndAdress}>
@@ -114,6 +133,7 @@ function OrderDetail({ route, navigation }) {
               onPress={() => changeStatusToOrder(order._id)}
               title="שלח הזמנה"
             />
+            <Button onPress={() => setModalStatus(true)} title="מחק הזמנה" />
           </View>
         </ScrollView>
       </ImageBackground>
@@ -128,14 +148,12 @@ const styles = StyleSheet.create({
     paddingStart: 15,
   },
   detailBox: {
-    // direction: "rtl"
     alignItems: "flex-start",
     paddingEnd: 10,
   },
   boldText: {
     fontWeight: "bold",
     fontSize: 16,
-    // marginRight: 20,
   },
   orderText: {
     fontSize: 16,
@@ -143,8 +161,12 @@ const styles = StyleSheet.create({
   head: { height: 40, backgroundColor: "#f1f8ff", alignItems: "center" },
   headText: { fontWeight: "bold", textAlign: "center", height: 30 },
   text: { margin: 6, textAlign: "center" },
-  sendBtn: { marginBottom: 50 },
-  // sendBtn:{position:"absolute",width:deviceWidth , height:deviceHeight * 85/100, justifyContent:"flex-end" },
+  sendBtn: {
+    marginBottom: 50,
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-around",
+  },
 });
 
 export default OrderDetail;

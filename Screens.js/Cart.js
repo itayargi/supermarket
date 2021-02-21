@@ -33,8 +33,6 @@ function Cart({ navigation }) {
         }
     }) : 0;
 
-
-    // const whatsappMessage = "רשימת קניות חדשה\n \n" + JSON.stringify(productContainer) + "\n סוף ההזמנה"
     const totalCart = favoriteList.reduce(function (accumulator, currentValue) {
         return Number(accumulator) + (Number(currentValue.salePrice) * currentValue.amount)
     }, 0)
@@ -55,8 +53,6 @@ function Cart({ navigation }) {
             var phone = (snapshot.val() && snapshot.val().phone) || null;
 
             const requestUrl = serverRequests.mainUrl + serverRequests.post
-            // const requestUrl = "http://10.0.0.8:3000/posts"
-            // const requestUrl = "/posts"
 
             const dataToServer = {
                 title: username,
@@ -68,7 +64,6 @@ function Cart({ navigation }) {
                 phone: phone
             }
 
-            // console.log("dataToServer", dataToServer)
             try {
                 const dataFromServer = await axiosRequest(requestUrl, "post", dataToServer)
                 console.log('dataFromServer', dataFromServer.data);
@@ -151,24 +146,19 @@ function Cart({ navigation }) {
         <SafeAreaView style={styles.container}>
             <ImageBackground source={require('../assets/background/cart_2.jpg')} style={styles.container}>
                 {productContainer.length > 0 ? <ScrollView>
-                    {/* <View> */}
                         <TableShow orders={favoriteList} navigation={navigation} />
-                    {/* </View> */}
                 </ScrollView> :
                     <View style={{ flex: 1, alignItems: "center" }}>
                         <Text style={{ color: "red", fontWeight: "bold", fontSize: 18 }}>אין פריטים בעגלה</Text>
                     </View>}
                 <View style={{ display: loader ? "flex" : "none" }}>
-
                     <ActivityIndicator size="large" color={colors.colorSeafoamBlue} />
                     <Text style={{ color: "white", textAlign: "center" }}>אנא המתן...</Text>
                 </View>
-
                 {/* cart total */}
                 <View style={styles.totalText}>
                     {/* addons */}
                     <View style={[styles.totalLine, { display: totalCart !== 0 ? "flex" : "none" }]}>
-                        {/* <Text style={{ textAlign: "center", fontSize: 16, }}>{"תוספת משלוח: "}</Text> */}
                         <Text style={{ textAlign: "center", fontSize: 15, }}>{"סהכ בעגלה: "}</Text>
                         <Text style={{ fontSize: 12 }}> {totalCart.toFixed(2)}{' ₪'}</Text>
                     </View>
@@ -226,8 +216,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#dcdcdc",
         width: "100%",
         paddingHorizontal: 5,
-        // borderWidth: 1,
-        // borderColor: "white",
     },
     totalLine: {
         alignItems: "center",

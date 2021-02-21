@@ -15,18 +15,14 @@ import ProductsContainer from "../components/ProductsContainer";
 import Header from "../components/Header";
 
 function ListOfProducts({ navigation, route }) {
-    // const [products, setProducts] = useContext(DataStorage);
     const [favoriteList, setFavoriteList] = useContext(DataStorage);
     const { productList } = route.params
-    // const { type } = route.params;
     const type = "allProducts"
-    // const productContainer = checkWitchPage();
 
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (<Header navigation={navigation} title="העגלה שלי" />),
-
         });
     }, [navigation]);
 

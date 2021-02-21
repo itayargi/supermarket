@@ -8,11 +8,8 @@ import {
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
     Keyboard,
-    SafeAreaView,
 } from "react-native";
-import { CustomPicker } from "react-native-custom-picker";
 import app from "../api/firebase";
-
 import colors from "../components/StylesGalery";
 import LoadingShow from "../components/LoadingShow";
 
@@ -98,8 +95,6 @@ function RegisterScreen({ navigation }) {
             <KeyboardAvoidingView style={styles(mood).container} behavior="height">
                 <View style={{ flex: 1, direction: "rtl", alignContent: "flex-start", alignItems: "flex-start", justifyContent: "space-around" }}>
                     {loading && <LoadingShow />}
-                    {/* <Logo width={100} height={100} /> */}
-                    {/* <LoadingScreen visible={loading} /> */}
                     <View style={styles(mood).errorMessage}>
                         {errorMsg && (
                             <Text style={{ color: colors.danger }}>{errorMsg}</Text>
@@ -109,7 +104,6 @@ function RegisterScreen({ navigation }) {
                     <View style={styles(mood).inputSpace}>
                         {/* full name */}
                         <View>
-                            {/* <Text style={styles(mood).smalltext}>: </Text> */}
                             <TextInput
                                 style={[styles(mood).input, { textAlign: "right" }]}
                                 onChangeText={(name) => setName(name)}
@@ -231,7 +225,6 @@ const styles = (mood) =>
             flex: 1,
             paddingHorizontal: 20,
             backgroundColor: mood === "Dark" ? Dark.Background : Light.Background,
-            // paddingTop: 85,
         },
         button: {
             height: 50,
@@ -241,15 +234,11 @@ const styles = (mood) =>
             margin: 10,
             alignItems: "center",
             justifyContent: "center",
-            // marginBottom: 30,
         },
         btnsBox: {
             width: "100%",
             alignItems: "center",
-            // flex: 0.1,
             justifyContent: "space-between",
-            // marginTop: 30,
-            // paddingBottom: 15,
         },
         buttonText: {
             color: mood === "Dark" ? Dark.Base : Light.Base,
@@ -258,7 +247,6 @@ const styles = (mood) =>
         errorMessage: {
             alignItems: "center",
             justifyContent: "center",
-            // position: "absolute"
         },
         inputTitle: {
             textTransform: "uppercase",
@@ -282,10 +270,7 @@ const styles = (mood) =>
         inputSpace: {
             width: "100%",
             flex: 0.6,
-            // height: "40%",
             justifyContent: "space-between",
-            // paddingTop: 50,
-            // marginBottom: 40,
         },
     });
 

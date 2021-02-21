@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, ActivityIndicator } from 'react-native';
 import firebase from "firebase/app";
 import app from '../api/firebase'
@@ -14,12 +14,12 @@ function LoadingPage({ navigation }) {
         const userData = app.auth().onAuthStateChanged((user) => {
             // User is signed in.
             if (user) {
-                console.log('funck yeah');
+                console.log('registered');
                 navigation.navigate('LogginScreen')
             }
             // No user is signed in.
             else {
-                console.log('no fucking fuck');
+                console.log('not registered');
                 navigation.navigate('RegisterScreen')
             }
         })
@@ -32,7 +32,6 @@ function LoadingPage({ navigation }) {
             <ImageBackground imageStyle={{ resizeMode: "contain" }} style={styles.background} source={require('../assets/background/logo.png')}>
                 <ActivityIndicator size="large" color="green" />
                 <Text style={{ color: "black" }} >טוען... אנא המתן</Text>
-                {/* <LoadingShow /> */}
             </ImageBackground>
         </View>
     );
